@@ -1,0 +1,35 @@
+<!DOCTYPE html><html class="ua_js_no"><head><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta charset="utf-8"/><title>Методология</title><script>(function(e,c){e[c]=e[c].replace(/(ua_js_)no/g,"$1yes");})(document.documentElement,"className");(function(d,n){d.documentElement.className+=" ua_svg_"+(d[n]&&d[n]("http://www.w3.org/2000/svg","svg").createSVGRect?"yes":"no");})(document,"createElementNS");</script><link rel="stylesheet" href="/_index.css"/></head><body class="page page_theme_islands page_site_methodology"><div class="header clearfix"><a class="logo header__logo" href="/"></a><div class="breadcrumbs header__breadcrumbs"><div class="breadcrumbs__item breadcrumbs__item_level_1">Методология</div></div><div class="header__item"><div class="lang-switcher"><div class="select select_mode_radio select_theme_islands select_size_m i-bem" data-bem="{&quot;select&quot;:{&quot;name&quot;:&quot;lang&quot;}}"><input class="select__control" type="hidden" name="lang" value="ru"/><button class="button button_size_m button_theme_islands button__control select__button i-bem" data-bem="{&quot;button&quot;:{}}" role="button" type="button"><span class="button__text">RU</span><i class="icon select__tick" aria-hidden="true"></i></button><div class="popup popup_target_anchor popup_theme_islands popup_autoclosable i-bem" data-bem="{&quot;popup&quot;:{&quot;directions&quot;:[&quot;bottom-left&quot;,&quot;bottom-right&quot;,&quot;top-left&quot;,&quot;top-right&quot;]}}"><div class="menu menu_size_m menu_theme_islands menu_mode_radio menu__control select__menu i-bem" data-bem="{&quot;menu&quot;:{}}" role="menu"><div class="menu-item menu-item_checked menu-item_theme_islands i-bem" data-bem="{&quot;menu-item&quot;:{&quot;val&quot;:&quot;ru&quot;}}" role="menuitem">RU</div><div class="menu-item menu-item_theme_islands i-bem" data-bem="{&quot;menu-item&quot;:{&quot;val&quot;:&quot;en&quot;}}" role="menuitem">EN</div></div></div></div></div><div class="search i-bem" data-bem="{&quot;search&quot;:{}}"><div class="search__switcher search__icon"></div><form class="form search__form control-group"><span class="input input_theme_islands input_size_l input_type_search input_has-clear search__input i-bem" data-bem="{&quot;input&quot;:{}}"><span class="input__box"><input class="input__control" name="q" type="search"/><i class="input__clear"></i></span></span><button class="button button_theme_islands button_size_l button_type_submit button_view_action button__control i-bem" data-bem="{&quot;button&quot;:{}}" role="button" type="submit"><i class="icon search__icon" aria-hidden="true"></i></button></form></div></div></div><ul class="nav"><li class="nav__item"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/forum/">Форум</a></li></ul><div class="main"><div class="content"><div class="post"><div><p>Обычно при вёрстке и программировании сайта разработчики опираются на допущение, что дизайн и технические требования к странице не изменятся в процессе разработки.</p>
+<p>Дизайнер, верстальщик и программист работают каждый в своей области, часто не пересекаясь друг с другом:</p>
+<ol>
+<li>Дизайнер представляет внешний вид страницы в виде набора макетов;</li>
+<li>На основе макетов разрабатывается статическая HTML/CSS-вёрстка;</li>
+<li>Программист пишет шаблоны на каком-либо серверном языке и оживляет сайт при помощи JavaScript.</li>
+</ol>
+<p>Такой подход рационален лишь в том случае, когда планируется изменять только контент сайта, не затрагивая дизайн.</p>
+<p>Обычно же так не происходит: сайт начинает жить своей жизнью и развиваться.
+Дизайн страниц постепенно меняется, добавляются новые страницы или новые блоки на них.</p>
+<p>Если в код сайта не заложена определенная структура, если он написан не по фиксированным правилам, постепенно его становится всё сложнее разрабатывать и поддерживать.</p>
+<p>При использовании БЭМ-подхода все разработчики сайта оперируют единым кодом и общаются в одних и тех же терминах, на одном языке:</p>
+<ol>
+<li>Дизайн сайта может измениться в любой момент, в зависимости от текущих задач;</li>
+<li>HTML/CSS-разметка развивается вместе с дизайном и подготовлена к его изменению;</li>
+<li>Программист и верстальщик работают над сайтом, дополняя код друг друга.</li>
+</ol>
+<h3 id="-">Условия появления методологии</h3>
+<p>БЭМ-методология была разработана в <a href="https://company.yandex.ru">Яндексе</a>
+для решения следующих задач:</p>
+<ul>
+<li><strong>Типовые проекты должны разрабатываться быстро, но жить долго</strong>.
+Необходимо уметь за короткий срок создавать проект, архитектура которого позволит без труда поддерживать и развивать его долгие годы.</li>
+<li><strong>Над проектом работает много людей</strong>.
+Необходимо эффективно организовывать работу команд: как из двух разработчиков, так и из десятков.</li>
+<li><strong>Масштабируемость команд</strong>.
+Добавление новых людей в команду должно улучшать её производительность.
+Рациональнее максимально быстро вводить новых разработчиков в курс дела и выделять им собственные зоны ответственности.
+Чтобы с одним и тем же кодом можно было работать долгое время и разным
+составом команды, код должен быть хорошо структурирован.</li>
+<li><strong>Повторное использование кода</strong>.
+Работа над каждым новым проектом или элементом интерфейса не должна начинаться с нуля. Если внутри компании прежде уже выполнялась похожая задача, необходимо максимально эффективно задействовать имеющийся код. У кода не должно быть контекстной зависимости, его должно быть легко переносить из одного места в другое.</li>
+</ul>
+<p>Мы искали решение возникающих перед нами проблем, что в какой-то момент привело к формированию <code>методологии БЭМ</code>.</p>
+</div></div></div></div><div class="footer"></div><script src="/_index.js"></script></body></html>

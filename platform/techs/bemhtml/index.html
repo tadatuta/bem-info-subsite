@@ -1,0 +1,943 @@
+<!DOCTYPE html><html class="ua_js_no"><head><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta charset="utf-8"/><title>BEMHTML</title><script>(function(e,c){e[c]=e[c].replace(/(ua_js_)no/g,"$1yes");})(document.documentElement,"className");(function(d,n){d.documentElement.className+=" ua_svg_"+(d[n]&&d[n]("http://www.w3.org/2000/svg","svg").createSVGRect?"yes":"no");})(document,"createElementNS");</script><link rel="stylesheet" href="/_index.css"/></head><body class="page page_theme_islands page_site_platform"><div class="header clearfix"><a class="logo header__logo" href="/"></a><div class="breadcrumbs header__breadcrumbs"><div class="breadcrumbs__item breadcrumbs__item_level_1"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/platform/">Платформа</a></div><div class="breadcrumbs__item breadcrumbs__item_level_2"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/platform/techs/">Технологии</a></div><div class="breadcrumbs__item breadcrumbs__item_level_3">BEMHTML</div></div><div class="header__item"><div class="lang-switcher"><div class="select select_mode_radio select_theme_islands select_size_m i-bem" data-bem="{&quot;select&quot;:{&quot;name&quot;:&quot;lang&quot;}}"><input class="select__control" type="hidden" name="lang" value="ru"/><button class="button button_size_m button_theme_islands button__control select__button i-bem" data-bem="{&quot;button&quot;:{}}" role="button" type="button"><span class="button__text">RU</span><i class="icon select__tick" aria-hidden="true"></i></button><div class="popup popup_target_anchor popup_theme_islands popup_autoclosable i-bem" data-bem="{&quot;popup&quot;:{&quot;directions&quot;:[&quot;bottom-left&quot;,&quot;bottom-right&quot;,&quot;top-left&quot;,&quot;top-right&quot;]}}"><div class="menu menu_size_m menu_theme_islands menu_mode_radio menu__control select__menu i-bem" data-bem="{&quot;menu&quot;:{}}" role="menu"><div class="menu-item menu-item_checked menu-item_theme_islands i-bem" data-bem="{&quot;menu-item&quot;:{&quot;val&quot;:&quot;ru&quot;}}" role="menuitem">RU</div><div class="menu-item menu-item_theme_islands i-bem" data-bem="{&quot;menu-item&quot;:{&quot;val&quot;:&quot;en&quot;}}" role="menuitem">EN</div></div></div></div></div><div class="search i-bem" data-bem="{&quot;search&quot;:{}}"><div class="search__switcher search__icon"></div><form class="form search__form control-group"><span class="input input_theme_islands input_size_l input_type_search input_has-clear search__input i-bem" data-bem="{&quot;input&quot;:{}}"><span class="input__box"><input class="input__control" name="q" type="search"/><i class="input__clear"></i></span></span><button class="button button_theme_islands button_size_l button_type_submit button_view_action button__control i-bem" data-bem="{&quot;button&quot;:{}}" role="button" type="submit"><i class="icon search__icon" aria-hidden="true"></i></button></form></div></div></div><ul class="nav"><li class="nav__item"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/platform/techs/bemhtml/quick-start/">Quick start</a></li><li class="nav__item"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/forum/">Форум</a></li></ul><div class="main"><div class="content"><div class="post"><div><p><a name="intro"></a></p>
+<h2 id="-">Введение</h2>
+<p><strong>Данный документ</strong> представляет собой справочное руководство по шаблонизатору BEMHTML.</p>
+<p>В документе описаны:</p>
+<ul>
+<li>основные особенности BEMHTML, отличающие его от других шаблонизаторов;</li>
+<li>примеры решения типовых задач средствами BEMHTML.</li>
+</ul>
+<p><strong>Целевая аудитория документа</strong> — веб-разработчики и HTML-верстальщики, использующие
+<a href="https://ru.bem.info/method/">БЭМ-методологию</a>.</p>
+<p>Предполагается, что читатель знаком с:</p>
+<ul>
+<li>HTML;</li>
+<li>JavaScript;</li>
+<li>CSS;</li>
+<li>БЭМ;</li>
+<li><a href="https://ru.bem.info/technology/bemjson/current/bemjson/">BEMJSON</a>.</li>
+</ul>
+<p><strong>В документе не описаны</strong> настройка среды разработки и процедуры компиляции шаблонов, синтаксис BEM-XJST-шаблонизаторов, синтаксис BEMJSON.</p>
+<p><a name="bemhtml"></a></p>
+<h2 id="-bemhtml">Особенности шаблонизатора BEMHTML</h2>
+<p><a name="arch"></a></p>
+<h3 id="-">Архитектура шаблонизатора</h3>
+<p>Для обработки BEMHTML-шаблонов используется модуль <a href="https://ru.bem.info/tools/templating-engines/bemxjst/">bem-xjst</a>, расширенный логикой из базового шаблона BEMHTML – <a href="https://github.com/bem/bem-core/blob/v2/common.blocks/i-bem/i-bem.bemhtml">i-bem.bemhtml</a>.</p>
+<p>Специфическая для BEMHTML логика при этом реализована на уровне базового шаблона <code>i-bem.bemhtml</code>. Базовый шаблон определяет:</p>
+<ul>
+<li>набор и порядок вызова <a href="#standardmoda">стандартных мод</a>;</li>
+<li>доступные <a href="#context_field">поля контекста</a></li>
+</ul>
+<p>Подробнее об особенностях архитектуры BEMHTML читайте в соответствующем разделе документа по <a href="https://ru.bem.info/technology/bemhtml/current/templating/#bemx_arch">шаблонизации данных в bem-core</a>.</p>
+<p><a name="uts"></a></p>
+<h3 id="-bem-xjst-">Поддержка BEM-XJST-синтаксиса</h3>
+<p>BEMHTML – <a href="https://ru.bem.info/technology/bemhtml/current/templating/#bemx_intro">BEM-XJST-шаблонизатор</a>. Иначе говоря, BEMHTML использует <strong>BEM-XJST-синтаксис</strong> и сохраняет все особенности BEM-XJST-шаблонизаторов, такие как:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#bem_area">привязка к БЭМ-предметной области</a>;</li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#decl_templatе">декларативные шаблоны</a>;</li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#language">язык описания и исполнения шаблонов — JavaScript</a>;</li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#restrictions">ограничения на уровне соглашений</a>.</li>
+</ul>
+<p><a name="basic"></a></p>
+<h2 id="-">Основные понятия</h2>
+<p><a name="inputdata"></a></p>
+<h3 id="-bemjson">Входные данные: BEMJSON</h3>
+<p>Поскольку BEMHTML основан на JavaScript, стандартным форматом представления БЭМ-дерева выбрана структура данных (объект) JavaScript, с набором дополнительных соглашений о представлении БЭМ-сущностей — BEMJSON.</p>
+<p>Задача шаблонизатора BEMHTML — преобразовать входное БЭМ-дерево в выходной HTML-документ. В целях сохранения гибкости
+и поддерживаемости, на уровне шаблонизатора не следует производить сложных преобразований входных данных. Шаблоны должны
+быть максимально простыми утверждениями, сопоставляющими каждому типу БЭМ-сущности нужное HTML-оформление.</p>
+<p>Поэтому структура входного БЭМ-дерева должна быть ориентирована на <strong>представление</strong> (view), чтобы при генерации
+HTML-дерева не требовалось изменять набор и порядок блоков и элементов. Приведение БЭМ-дерева к такому развернутому виду должно производиться на уровне бэкенда, предшествующего шаблонизатору (например, с помощью технологии <a href="https://ru.bem.info/technology/bemtree/current/bemtree/">BEMTREE</a>).</p>
+<p>Иллюстрацией view-ориентированного формата
+данных может служить пример френдленты, разобранный в разделе <a href="https://ru.bem.info/technology/bemtree/current/bemtree/#bringing_input">Приведение входных данных к формату, ориентированному на представление</a> документации по BEMTREE.</p>
+<p>В то же время детали организации HTML-страницы, которые являются зоной ответственности верстальщика, должны определяться
+только на уровне шаблонизатора. Пример такого решения приведен в разделе <a href="#additionbem">Добавление БЭМ-сущностей для задач верстки</a>.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemjson/current/bemjson/">Синтаксис BEMJSON</a></li>
+</ul>
+<p><a name="templatebemjson"></a></p>
+<h3 id="-">Шаблон</h3>
+<p>Единицей программы на BEMHTML является <strong>шаблон</strong>. Шаблон BEMHTML связывает входную БЭМ-сущность (заданную именем
+сущности, элемента, именем и значением модификатора) и соответствующий этой сущности HTML-элемент.</p>
+<p>Шаблон состоит из:</p>
+<ul>
+<li><strong>предиката</strong> — набора условий, при выполнении которых применяется шаблон. Типичный предикат описывает свойства
+входной БЭМ-сущности;</li>
+<li>и <strong>тела</strong> — инструкций по генерации выходного HTML.</li>
+</ul>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#unity">Синтаксис BEM-XJST</a></li>
+</ul>
+<p><a name="moda"></a></p>
+<h3 id="-">Мода</h3>
+<p>В процессе работы шаблонизатор последовательно обходит узлы входного БЭМ-дерева. Для каждого узла — БЭМ-сущности —
+выполняется цикл генерации выходного HTML-элемента. Для вложенных сущностей цикл генерации HTML-элементов выполняется
+рекурсивно. Таким образом, выходное HTML-дерево формируется поэлементно в процессе обхода входного БЭМ-дерева.</p>
+<p>Цикл генерации каждого элемента последовательно проходит ряд фаз, называемых <strong>модами</strong>. Каждая мода отвечает
+за определенный фрагмент генерируемого HTML-элемента — тег, атрибуты, класс и т.п. В каждой моде вызывается процедура выбора и выполнения подходящего шаблона.</p>
+<p>Моды позволяют разделить выходной элемент на фрагменты, каждый из которых может быть описан простым типом данных:
+тег и класс — строкой, атрибуты — словарем, необходимость в БЭМ-классах — логическим значением и т.п. Благодаря этому
+возможно написание декларативных шаблонов, в предикате которых указана мода, а в теле содержатся данные соответствующего
+этой моде простого типа. В этом случае полное представление HTML-элемента может быть задано несколькими шаблонами.</p>
+<p>Особый статус имеет <strong><a href="#default">мода default</a></strong>, которая отвечает за генерацию целого HTML-элемента. В рамках этой
+моды задан набор и порядок прохождения остальных мод, соответствующих фрагментам HTML-элемента, а также определена
+процедура сборки финального представления HTML-элемента из фрагментов, сгенерированных в остальных модах. Написание
+шаблона, который переопределяет поведение в данной моде, позволяет полностью контролировать генерацию элемента
+из BEMHTML, не пользуясь стандартными модами, позволяющими генерировать выходной элемент по частям.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="#standardmoda">Стандартные моды</a></li>
+</ul>
+<p><a name="context"></a></p>
+<h3 id="-">Контекст</h3>
+<p>В процессе обхода входного BEMJSON-дерева шаблонизатор строит <strong>контекст</strong> — структуру данных, которая доступна в момент применения шаблонов. Контекст соответствует текущему элементу (узлу) входного БЭМ-дерева и включает:</p>
+<ul>
+<li>нормализованные сведения о текущей БЭМ-сущности;</li>
+<li>фрагмент входных данных без модификаций (текущий элемент BEMJSON-дерева и его потомки);</li>
+<li>строковый буфер, в который записывается HTML-результат;</li>
+<li>служебные поля, содержащие сведения о текущем состоянии (мода, позиция во входном БЭМ-дереве и т.п.);</li>
+<li>вспомогательные функции.</li>
+</ul>
+<p>БЭМ-сущность, описываемая текущим контекстом, называется <strong>контекстной сущностью</strong>.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="#context_field">Поля контекста</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#extensionbem">Достраивание БЭМ-сущностей по контексту</a></li>
+</ul>
+<p><a name="standardmoda"></a></p>
+<h2 id="-">Стандартные моды</h2>
+<p>В базовом шаблоне BEMHTML определен набор стандартных мод, которые задают порядок обхода входного БЭМ-дерева (BEMJSON) и генерации выходного HTML, используемый BEMHTML по умолчанию.</p>
+<p>По функциональности моды разделяются на два класса:</p>
+<ul>
+<li><strong>«Пустая» мода</strong> определяет алгоритм обхода узлов входного BEMJSON и вызова остальных мод;</li>
+<li>Все остальные моды определяют порядок генерации выходного HTML. В каждой из таких мод формируется тот или иной
+фрагмент выходного HTML-дерева.</li>
+</ul>
+<p>Для генерации HTML в каждой моде вызывается процедура выбора и выполнения подходящего шаблона (предикат которого истинен
+в данном контексте). Результат вычисления тела выбранного шаблона подставляется в тот фрагмент HTML-дерева (HTML-элемента), за генерацию которого отвечает данная мода.</p>
+<p>Данная логика работы накладывает следующие ограничения на шаблоны:</p>
+<ul>
+<li>Если шаблон выводит какие-то данные в HTML, в его предикате должна быть указана мода.</li>
+<li>В предикате шаблона может быть указано не более одной моды.</li>
+<li>В результате вычисления тела шаблона должен возвращаться тот тип объекта, который ожидается в рамках данной моды.</li>
+</ul>
+<p>В последующих разделах моды перечислены в порядке их вызова при обработке элемента входного BEMJSON.</p>
+<p><a name="empty_moda"></a></p>
+<h3 id="-">«Пустая» мода (<code>&quot;&quot;</code>)</h3>
+<p><em>Тип значения тела шаблона: <code>не используется</code></em></p>
+<p>Пустая (не определенная) мода соответствует моменту, когда значение поля контекста <code>this._mode</code> равно пустой стоке
+(<code>&quot;&quot;</code>). Это значение выставляется:</p>
+<ul>
+<li>перед началом обработки входного дерева;</li>
+<li>в момент рекурсивного вызова процедуры обхода дерева в моде <code>default</code>.</li>
+</ul>
+<p>Действие, выполняемое в рамках пустой моды, зависит от типа контекстного (текущего) элемента входного BEMJSON-дерева.</p>
+<table>
+<tr>
+    <th>Тип элемента</th>
+    <th>Действие</th>
+</tr>
+<tr>
+    <td><b>БЭМ-сущность</b> (блок или элемент)</td>
+    <td>Выставление значений в служебных полях контекста (<code>block elem mods elemMods ctx position</code>)
+    и вызов шаблонов по моде <code>default</code>.</td>
+</tr>
+
+<tr>
+    <th>строка/число</th>
+    <td>Вывод значения, приведенного к строке, в буфер HTML-результата.</td>
+</tr>
+<tr>
+    <th>Boolean, undefined, null</th>
+    <td>Вывод пустой строки в буфер HTML-результата.</td>
+</tr>
+<tr>
+    <th>массив</th>
+    <td>Итерация по массиву с рекурсивным вызовом шаблонов по пустой моде.</td>
+</tr>
+</table>
+
+<p>Определение шаблона по пустой моде (подпредикат <code>mode(this._mode === &quot;&quot;)</code>) имеет смысл только в том случае, если необходимо
+переопределить принцип обхода входного дерева.</p>
+<p>Вызов шаблонов по пустой моде (конструкция <code>apply(&#39;&#39;)</code> в теле шаблона) необходим, если требуется отклониться
+от однозначного соответствия «входная БЭМ-сущность — выходной HTML-элемент» и сгенерировать более одного элемента на одну входную сущность. В частности, такой вызов осуществляется автоматически при использовании
+<a href="https://ru.bem.info/technology/bemhtml/current/templating/#applyctx">конструкции applyCtx</a>.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="#wrappingunit">Оборачивание блока в другой блок</a></li>
+</ul>
+<p><a name="default"></a></p>
+<h3 id="default">default</h3>
+<p><em>Тип значения тела шаблона: <code>не используется</code></em></p>
+<p>В рамках моды <code>default</code> полностью формируется выходной HTML-элемент, соответствующий входной БЭМ-сущности.</p>
+<p>В ходе выполнения моды <code>default</code> происходит:</p>
+<ul>
+<li>вызов всех остальных стандартных мод, отвечающих за формирование отдельных аспектов HTML-элемента;</li>
+<li>объединение результатов выполнения всех вызываемых мод в результирующую HTML-строку;</li>
+<li>рекурсивный вызов шаблонов на результат выполнения моды <code>content</code>.</li>
+</ul>
+<p>На рисунке ниже схематически отражено, в каких модах генерируются различные фрагменты выходного HTML-элемента.</p>
+<p><img src="https://raw.github.com/bem/bem-core/v1/common.docs/reference/reference_mode_default.png" alt="mode-default"></p>
+<p>Схема отражает вариант обработки элемента, имеющего пару открывающий—закрывающий тег и вложенное содержимое. Обработка
+коротких (самозакрытых) элементов аналогична и отличается только отсутствием закрывающего тега и рекурсии. Следует
+ли обрабатывать данный элемент как короткий, определяет вспомогательная функция контекста <code>this._.isShortTag</code>
+на основании имени элемента (тега).</p>
+<p>Определение шаблона по моде <code>default</code> (подпредикат <code>def()</code>) необходимо в тех случаях, когда нужно переопределить
+процедуру генерации выходного HTML-элемента, например, добавить DOCTYPE к тегу HTML:</p>
+<pre><code class="lang-js">block (&#39;b-page&#39;)(
+  def()(
+    this._buf.push(&#39;&lt;!DOCTYPE html&gt;&#39;);
+    applyNext();
+  ),
+  tag()(&#39;html&#39;)
+)
+</code></pre>
+<p><a name="tag"></a></p>
+<h3 id="tag">tag</h3>
+<ul>
+<li><em>Тип значения тела шаблона: <code>String</code></em></li>
+<li><em>Значение по умолчанию: <code>&#39;div&#39;</code></em></li>
+</ul>
+<p>Мода <code>tag</code> задает имя выходного HTML-элемента (тег). По умолчанию имя элемента равно <code>div</code>. Фрагменты HTML, за генерацию
+которых отвечает мода <code>tag</code>, выделены на рисунке:</p>
+<p><img src="https://raw.github.com/bem/bem-core/v1/common.docs/reference/reference_mode_tag.png" alt="mode-tag"></p>
+<p><strong>NB</strong> Если в качестве значения <code>tag</code> указать пустую строку, для данной сущности будет пропущен этап генерации
+HTML-элемента (тега и всех атрибутов), но содержимое элемента (<code>content</code>) будет обработано обычным образом.</p>
+<p>Определение шаблона по моде <code>tag</code> (подпредикат <code>tag()</code>) необходимо, если:</p>
+<ul>
+<li>для данной сущности следует сгенерировать HTML-элемент с именем, отличным от <code>div</code>;</li>
+<li>отказаться от генерации HTML-элемента для данной сущности, но обработать вложенные сущности.</li>
+</ul>
+<table>
+<tr>
+    <th>Входные данные</th>
+    <th>Шаблон</th>
+    <th>HTML-результат</th>
+</tr>
+
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;b1&#39;,
+  content: &#39;text&#39;
+}</code></pre>
+    </td>
+    <td><pre><code>block(&#39;b1&#39;).tag()(&#39;span&#39;)</code></pre></td>
+    <td><pre><code>&lt;span class=&quot;b1&quot;&gt;text&lt;/span&gt;</code></pre></td>
+</tr>
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;b1&#39;,
+  content: {
+    block: &#39;b2&#39;
+  }
+}</code></pre>
+    </td>
+    <td><pre><code>block(&#39;b1&#39;).tag()(&#39;&#39;)</code></pre></td>
+    <td><pre><code>&lt;div class=&quot;b2&quot;&gt;&lt;/div&gt;</code></pre></td>
+</tr>
+</table>
+
+<p><a name="js"></a></p>
+<h3 id="js">js</h3>
+<ul>
+<li><em>Тип значения тела шаблона: <code>Boolean|Object</code></em></li>
+<li><em>Значение по умолчанию: <code>false</code></em></li>
+</ul>
+<p>Мода <code>js</code> указывает, есть ли у обрабатываемого блока клиентский JavaScript. В случае наличия JavaScript в моде <code>js</code>
+могут быть переданы параметры клиентского JavaScript (записываются в атрибут HTML-элемента, имя которого определяется
+<a href="#jsAttr">модой <code>jsAttr</code></a>.</p>
+<p>Мода <code>js</code> допускает два типа значения тела шаблона:</p>
+<ul>
+<li><code>Boolean</code> — Флаг, указывающий, имеет ли данный блок клиентский JavaScript.</li>
+<li><code>Object</code> — Хэш, содержащий параметры JavaScript (подразумевается, что данный блок имеет клиентский JavaScript).</li>
+</ul>
+<p>Фрагменты HTML, за генерацию которых отвечает мода <code>js</code>, выделены на рисунке:</p>
+<p><img src="https://raw.github.com/bem/bem-core/v1/common.docs/reference/reference_mode_js.png" alt="mode-js"></p>
+<p>Определение шаблона по моде <code>js</code> (подпредикат <code>js()</code>) имеет смысл только в том случае, если у блока имеется клиентский
+JavaScript.</p>
+<table>
+<tr>
+    <th>Входные данные</th>
+    <th>Шаблон</th>
+    <th>HTML-результат</th>
+</tr>
+<tr>
+    <td><pre><code>{block: &#39;b1&#39;}</code></pre></td>
+    <td><pre><code>block(&#39;b1&#39;).js()(true)</code></pre></td>
+    <td><pre><code>&lt;div class=&quot;b1 i-bem&quot;
+    data-bem=&quot;{ &#39;b1&#39;: {} }&quot;&gt;
+&lt;/div&gt;</code></pre></td>
+</tr>
+<tr>
+    <td><pre><code>{block: &#39;b1&#39;}</code></pre></td>
+    <td><pre><code>block(&#39;b1&#39;).js()({param: &#39;value&#39;})</code></pre></td>
+    <td><pre><code>&lt;div class=&quot;b1 i-bem&quot;
+    data-bem=&quot;{ &#39;b1&#39;: { &#39;param&#39;: &#39;value&#39; } }&quot;&gt;
+&lt;/div&gt;</code></pre></td>
+</tr>
+</table>
+
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/libs/bem-bl/current/desktop/i-bem/">JS-реализация блока i-bem</a></li>
+</ul>
+<p><a name="bem"></a></p>
+<h3 id="bem">bem</h3>
+<ul>
+<li><em>Тип значения тела шаблона: <code>Boolean</code></em></li>
+<li><em>Значение по умолчанию: <code>true</code></em></li>
+</ul>
+<p>Мода <code>bem</code> указывает, нужно ли при формировании HTML-атрибута <code>class</code> включать автоматически сгенерированные имена
+классов, описывающие данную БЭМ-сущность. По умолчанию генерация БЭМ-классов выполняется. Фрагмент HTML, за генерацию
+которого отвечает мода <code>bem</code>, выделен на рисунке:</p>
+<p><img src="https://raw.github.com/bem/bem-core/v1/common.docs/reference/reference_mode_bem.png" alt="mode-bem"></p>
+<p>Определение шаблона по моде <code>bem</code> (подпредикат <code>bem()</code>) имеет смысл только в том случае, если для данной сущности
+<strong>не нужно</strong> генерировать HTML-классы, относящиеся к БЭМ-предметной области. Это может быть необходимо для соблюдения
+синтаксических требований HTML. Например, теги <code>html</code>, <code>meta</code>, <code>link</code>, <code>script</code>, <code>style</code> не могут иметь атрибута <code>class</code>.</p>
+<table>
+<tr>
+    <th>Входные данные</th>
+    <th>Шаблон</th>
+    <th>HTML-результат</th>
+</tr>
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;b-page&#39;
+}</code></pre>
+    </td>
+    <td>
+        <pre><code>block(&#39;b-page&#39;)(
+  tag()(&#39;html&#39;),
+  bem()(false)
+)</code></pre>
+    </td>
+    <td><pre><code>&lt;html&gt;&lt;/html&gt;</code></pre></td>
+</tr>
+</table>
+
+<p><a name="cls"></a></p>
+<h3 id="cls">cls</h3>
+<ul>
+<li><em>Тип значения тела шаблона: <code>String</code></em></li>
+<li><em>Значение по умолчанию: <code>&#39;&#39;</code></em></li>
+</ul>
+<p>Мода <code>cls</code> позволяет определить произвольную строку, добавляемую в значение атрибута <code>class</code> помимо автоматически
+генерируемых значений. Фрагмент HTML, за генерацию которого отвечает мода <code>cls</code>, выделен на рисунке:</p>
+<p><img src="https://raw.github.com/bem/bem-core/v1/common.docs/reference/reference_mode_cls.png" alt="mode-cls"></p>
+<p>Определение шаблона по моде <code>cls</code> (подпредикат <code>cls()</code>) имеет смысл в том случае, если для данного элемента необходимы
+специфические HTML-классы, не относящиеся к предметной области БЭМ.</p>
+<table>
+<tr>
+    <th>Входные данные</th>
+    <th>Шаблон</th>
+    <th>HTML-результат</th>
+</tr>
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;b1&#39;
+}</code></pre>
+    </td>
+    <td><pre><code>block(&#39;b1&#39;).cls()(&#39;custom&#39;)</code></pre></td>
+    <td><pre><code>&lt;div class=&quot;b1 custom&quot;&gt;&lt;/div&gt;</code></pre></td>
+</tr>
+</table>
+
+<p><a name="mix"></a></p>
+<h3 id="mix">mix</h3>
+<ul>
+<li><em>Тип значения тела шаблона: <code>Array|Object</code></em></li>
+<li><em>Значение по умолчанию: <code>[]</code></em></li>
+</ul>
+<p>Мода <code>mix</code> задает список БЭМ-сущностей, которые необходимо <strong>примешать</strong> к данной сущности. Сущность, в рамках которой
+выполняется примешивание, называется <strong>базовой</strong>, а добавляемая сущность — <strong>примешиваемой</strong>. Имеет смысл примешивание
+блоков и элементов.</p>
+<p>Технически примешивание сводится к следующим операциям:</p>
+<ul>
+<li>БЭМ-классы примешиваемой сущности добавляются в значение атрибута <code>class</code> текущего элемента наряду с классами
+базовой сущности;</li>
+<li>Если примешиваемая сущность имеет JavaScript-параметры, они добавляются в значение атрибута, заданного модой
+<code>jsAttr</code>. JavaScript-параметры передаются в виде хэша, ключом является имя примешиваемой сущности.</li>
+</ul>
+<p>Все прочие составляющие HTML-элемента (тег, атрибуты и под.) генерируются на основании шаблонов для базовой сущности.</p>
+<p>Значением тела шаблона для данной моды может быть:</p>
+<ul>
+<li><strong>Массив</strong>, в котором содержится список объектов (хэшей), каждый из которых описывает БЭМ-сущности, которые
+необходимо подмешать.</li>
+<li><strong>Объект</strong>, описывающий примешиваемую БЭМ-сущность. Интерпретируется как массив, состоящий из одного элемента.</li>
+</ul>
+<p>Фрагмент HTML, за генерацию которого отвечает мода <code>mix</code>, выделен на рисунке:</p>
+<p><img src="https://raw.github.com/bem/bem-core/v1/common.docs/reference/reference_mode_mix.png" alt="mode-mix"></p>
+<p>Определение шаблона по моде <code>mix</code> (подпредикат <code>mix()</code>) требуется, когда необходимо выполнить примешивание блока
+или элемента на уровне шаблонизатора.</p>
+<hr>
+<p><strong>NB</strong> Примешивание БЭМ-сущностей выполняется рекурсивно. Иными словами, если для примешиваемой сущности определен
+шаблон, в котором к ней примешиваются еще какие-либо сущности, все такие сущности добавляются рекурсивно и классы
+для них появятся в атрибуте <code>class</code> базовой сущности (см. пример ниже).</p>
+<table>
+<tr>
+    <th>Входные данные</th>
+    <th>Шаблон</th>
+    <th>HTML-результат</th>
+</tr>
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;b1&#39;
+  js: { p: 1 }
+}</code></pre>
+    </td>
+    <td>
+        <pre><code>block(&#39;b1&#39;).mix()({
+  block: &#39;b2&#39;,
+  js: { p: 2 }
+})</code></pre>
+    </td>
+    <td><pre><code>&lt;div class=&quot;b1 b2 i-bem&quot;
+    data-bem=&quot;{
+        &#39;b1&#39;: { &#39;p&#39;: 1 },
+        &#39;b2&#39;: { &#39;p&#39;: 2 }
+    }&quot;&gt;
+&lt;/div&gt;</code></pre></td>
+</tr>
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;b1&#39;
+}</code></pre>
+    </td>
+    <td>
+        <pre><code>block(&#39;b1&#39;).mix()([ { block: &#39;b2&#39; } ])
+block(&#39;b2&#39;).mix()([ { block: &#39;b3&#39; } ])
+block(&#39;b3&#39;).mix()([ { block: &#39;b4&#39; } ])
+block(&#39;b4&#39;).mix()([ { block: &#39;b1&#39; } ])</code></pre>
+    </td>
+    <td><pre><code>&lt;div class=&quot;b1 b2 b3 b4&quot;&gt;&lt;/div&gt;</code></pre></td>
+</tr>
+</table>
+
+<hr>
+<p><a name="jsAttr"></a></p>
+<h3 id="jsattr">jsAttr</h3>
+<ul>
+<li><em>Тип значения тела шаблона: <code>String</code></em></li>
+<li><em>Значение по умолчанию: <code>&#39;data-bem&#39;</code></em></li>
+</ul>
+<p>Мода <code>jsAttr</code> определяет имя HTML-атрибута, в значении которого будут переданы параметры клиентского JavaScript для
+данного блока. По умолчанию используется атрибут <code>data-bem</code>. Фрагмент HTML, за генерацию которого отвечает мода <code>jsAttr</code>,
+выделен на рисунке:</p>
+<p><img src="https://raw.github.com/bem/bem-core/v1/common.docs/reference/reference_mode_jsattr.png" alt="mode-jsattr"></p>
+<p>Определение шаблона по моде <code>jsAttr</code> (подпредикат <code>jsAttr()</code>) необходимо в том случае, если требуется передавать параметры JavaScript в нестандартном атрибуте.</p>
+<table>
+<tr>
+    <th>Входные данные</th>
+    <th>Шаблон</th>
+    <th>HTML-результат</th>
+</tr>
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;b1&#39;,
+  js: true
+}</code></pre>
+    </td>
+    <td><pre><code>block(&#39;b1&#39;).jsAttr()(&#39;ondblclick&#39;)</code></pre></td>
+    <td><pre><code>&lt;div class=&quot;b1 i-bem&quot;
+    ondblclick=&quot;{&#39;b1&#39;: {} }&quot;&gt;
+&lt;/div&gt;</code></pre></td>
+</tr>
+</table>
+
+<p><a name="attrs"></a></p>
+<h3 id="attrs">attrs</h3>
+<ul>
+<li><em>Тип значения тела шаблона: <code>Object</code></em></li>
+<li><em>Значение по умолчанию: <code>{}</code></em></li>
+</ul>
+<p>Мода <code>attrs</code> позволяет задать имена и значения произвольных HTML-атрибутов для данного элемента. По умолчанию
+дополнительные атрибуты не генерируются. Фрагмент HTML, за генерацию которого отвечает мода <code>attrs</code>, выделен на рисунке:</p>
+<p><img src="https://raw.github.com/bem/bem-core/v1/common.docs/reference/reference_mode_attrs.png" alt="mode-attrs"></p>
+<p>Значением тела шаблона для данной моды должен быть объект (хеш), содержащий имена и значения атрибутов в качестве
+пар ключ—значение. В качестве ключа должен выступать валидный идентификатор HTML-атрибута, а в качестве значения — строка или число. При выводе HTML специальные символы в значениях атрибутов экранируются вспомогательной функцией <code>this._.attrEscape()</code>.</p>
+<p><strong>NB</strong> Если в качестве значения атрибута указать <code>undefined</code>, этот атрибут не будет выведен в HTML-элементе.</p>
+<p>Определение шаблона по моде <code>attrs</code> (подпредикат <code>attrs()</code>) необходимо во всех случаях, когда требуется:</p>
+<ul>
+<li>добавить произвольные HTML-атрибуты на уровне шаблонизатора;</li>
+<li>исключить указанные атрибуты из вывода, даже если они были определены во входном BEMJSON.</li>
+</ul>
+<table>
+<tr>
+    <th>Входные данные</th>
+    <th>Шаблон</th>
+    <th>HTML-результат</th>
+</tr>
+
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;logo&#39;,
+}</code></pre>
+    </td>
+    <td>
+        <pre><code>block(&#39;logo&#39;)(
+  tag()(&#39;img&#39;),
+  attrs()({ alt: &#39;logo&#39;, href: &#39;http://...&#39; })
+)</code></pre>
+    </td>
+    <td><pre><code>&lt;img alt=&quot;logo&quot;
+    href=&quot;http://...&quot; /&gt;</code></pre></td>
+</tr>
+
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;input&#39;,
+  disabled: true
+}</code></pre>
+    </td>
+    <td>
+        <pre><code>block(&#39;input&#39;)(
+  tag()(&#39;input&#39;),
+  attrs()({
+    disabled: this.ctx.disabled ? &#39;disabled&#39; : undefined
+  })
+)</code></pre>
+    </td>
+    <td><pre><code>&lt;input class=&quot;input&quot;
+    disabled=&quot;disabled&quot;/&gt;</code>&lt;/pre&gt;</td>
+</tr>
+
+<tr>
+    <td>
+        <code>{ block: &#39;input&#39; }</code>
+    </td>
+
+    <td>Тот же шаблон</td>
+    <td><pre><code>&lt;input class=&quot;input&quot;/&gt;</code></pre></td>
+</tr>
+</table>
+
+<p><a name="content"></a></p>
+<h3 id="content">content</h3>
+<ul>
+<li><em>Тип значения тела шаблона: <code>BEMJSON</code></em></li>
+<li><em>Значение по умолчанию: <code>this.ctx.content</code></em></li>
+</ul>
+<p>В рамках моды <code>content</code> вычисляется содержимое HTML-элемента, в качестве которого может выступать произвольный BEMJSON
+(как строка или число, так и дерево БЭМ-сущностей). В качестве значения по умолчанию используется значение поля
+<code>content</code> контекстной БЭМ-сущности (<code>this.ctx.content</code>).</p>
+<p>Фрагмент HTML, за генерацию которого отвечает мода <code>content</code>, выделен на рисунке:</p>
+<p><img src="https://raw.github.com/bem/bem-core/v1/common.docs/reference/reference_mode_content.png" alt="mode-content"></p>
+<p>Определение шаблона по моде <code>content</code> (подпредикат <code>content()</code>) необходимо, если:</p>
+<ul>
+<li>Необходимо на уровне шаблонизатора добавить содержимое для сущности, у которой отсутствует <code>content</code> во входном
+BEMJSON.</li>
+<li>Необходимо подменить содержимое сущности на уровне шаблонизатора.</li>
+</ul>
+<table>
+<tr>
+    <th>Входные данные</th>
+    <th>Шаблон</th>
+    <th>HTML-результат</th>
+</tr>
+
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;b1&#39;
+}</code></pre>
+    </td>
+    <td>
+        <pre><code>block(&#39;b1&#39;).content()({
+  block: &#39;b2&#39;
+})</code></pre>
+    </td>
+    <td><pre><code>&lt;div class=&quot;b1&quot;&gt;&lt;div class=&quot;b2&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre></td>
+</tr>
+</table>
+
+
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="#inheritage">Наследование</a></li>
+<li><a href="#additionbem">Добавление БЭМ-сущностей для задач верстки</a></li>
+</ul>
+<p><a name="context_field"></a></p>
+<h2 id="-">Поля контекста</h2>
+<p>В процессе работы шаблонизатор BEMHTML строит структуру данных, содержащую сведения об обрабатываемом узле BEMJSON
+и о состоянии процесса обработки. Помимо этого в контексте доступен ряд вспомогательных функций BEMHTML.</p>
+<p>В момент выполнения шаблона контекст доступен в виде объекта, обозначаемого ключевым словом <code>this</code>. Обращение
+к контексту возможно как в предикате, так и в теле шаблона.</p>
+<p>Автор шаблонов имеет возможность определить любые дополнительные поля в контексте.</p>
+<p>Все поля контекста можно разделить на две категории:</p>
+<ul>
+<li><strong>Контекстно-зависимые</strong>, значение которых изменяется в зависимости от обрабатываемого узла и фазы процесса обработки.</li>
+<li><strong>Контекстно-независимые</strong>, значение которых постоянно.</li>
+</ul>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="#context">Контекст</a></li>
+</ul>
+<p><a name="contextdependent"></a></p>
+<h3 id="-">Контекстно-зависимые поля</h3>
+<p>BEMHTML расширяет набор <a href="https://ru.bem.info/technology/bemhtml/current/templating/#contextdependent">контекстно-зависимых полей BEM-XJST</a> следующими:</p>
+<table>
+<tr>
+    <th>Поле</th>
+    <th>Тип значения</th>
+    <th>Описание</th>
+</tr>
+<tr>
+    <td><code>this.position</code></td>
+    <td><code>Number</code></td>
+    <td>Номер позиции текущей сущности среди ее сиблингов во входном BEMJSON-дереве (начиная с 1).</td>
+</tr>
+<tr>
+    <td><code>this._buf</code></td>
+    <td><code>Array</code></td>
+    <td>Буфер HTML-результата. Обычно используется только для записи готовых HTML-фрагментов с использованием метода
+    <code>this._buf.push()</code>.</td>
+</tr>
+<tr>
+    <td><code>this.isFirst()</code></td>
+    <td><code>Boolean</code></td>
+    <td>Проверяет, является ли данная БЭМ-сущность первой среди сиблингов во входном БЭМ-дереве..</td>
+</tr>
+
+<tr>
+    <td><code>this.isLast()</code></td>
+    <td><code>Boolean</code></td>
+    <td>Проверяет, является ли данная БЭМ-сущность последней среди сиблингов во входном БЭМ-дереве. Подробнее
+    см. <a href="#algorithmbem">Алгоритм вычисления позиции БЭМ-сущности</a>.</td>
+</tr>
+</table>
+
+
+
+
+<p><a name="algorithmbem"></a></p>
+<h4 id="-">Алгоритм вычисления позиции БЭМ-сущности</h4>
+<p>Позиция в БЭМ-дереве (поле контекста <code>this.position</code>) представляет собой натуральное число, соответствующее порядковому
+номеру текущей (контекстной) БЭМ-сущности среди ее сиблингов в БЭМ-дереве (одноранговых сущностей).</p>
+<p>При вычислении позиции:</p>
+<ul>
+<li>Нумеруются только те узлы обрабатываемого BEMJSON, которые соответствуют БЭМ-сущностям, прочим узлам
+не соответствует никакой номер позиции.</li>
+<li>Позиции нумеруются начиная с 1.</li>
+<li>Нумерация производится в порядке обхода дерева (уплощенный список иерархического представления BEMJSON).</li>
+</ul>
+<p>Пример нумерации позиций во входном БЭМ-дереве:</p>
+<pre><code class="lang-js">{
+  block: &#39;page&#39;,          // this.position === 1
+  content: [
+    { block: &#39;head&#39; },    // this.position === 1
+    &#39;text&#39;,               // this.position === undefined
+    {
+      block: &#39;menu&#39;,      // this.position === 2
+      content: [
+        { elem: &#39;item&#39; }, // this.position === 1
+        { elem: &#39;item&#39; }, // this.position === 2
+        { elem: &#39;item&#39; }  // this.position === 3
+      ]
+    }
+  ]
+}
+</code></pre>
+<p><strong>NB</strong> БЭМ-дерево может быть достроено в процессе выполнения шаблонов с помощью шаблонов по моде <code>content</code> и шаблонов
+по пустой моде. Такое динамическое изменение БЭМ-дерева учитывается при вычислении позиции.</p>
+<p>Функция определения последней БЭМ-сущности среди сиблингов <code>this.isLast()</code> <strong>не сработает</strong> в том случае, если
+в массиве, содержащем одноранговые БЭМ-сущности, последний элемент не является БЭМ-сущностью. Например:</p>
+<pre><code class="lang-js">  block(&#39;b1&#39;)(
+    content()([
+        { block: &#39;b2&#39; },
+        { block: &#39;b3&#39; }, // this.isLast() === false
+        &#39;text&#39;
+    ])
+  )
+</code></pre>
+<p>Такое поведение объясняется тем, что в целях оптимизации BEMHTML не выполняет предварительного полного обхода
+БЭМ-дерева. Поэтому в момент обработки блока <code>b3</code> уже известна длина массива (<code>b3</code> не является последним элементом),
+но еще не известно, что последний элемент не является БЭМ-сущностью и не получит номера позиции.</p>
+<p>На практике описанный случай некорректного срабатывания <code>this.isLast()</code> не должен порождать ошибок, так как проверка
+на первую/последнюю БЭМ-сущность обычно применяется к автоматически сгенерированным спискам сущностей, в которые
+не имеет смысла включать данные других типов.</p>
+<p><a name="context_independent"></a></p>
+<h3 id="-">Контекстно-независимые поля</h3>
+<p>Все контекстно-независимые поля сгруппированы в объекте <code>this._</code> и представляют собой вспомогательные функции,
+используемые при работе шаблонизатора. Автор шаблонов также может пользоваться этими функциями как в теле шаблонов, так и в предикатах.</p>
+<p>BEMHTML расширяет набор <a href="https://ru.bem.info/technology/bemhtml/current/templating/#context_independent">контекстно-независимых полей BEM-XJST</a> следующими:</p>
+<table>
+<tr>
+    <th>Поле</th>
+    <th>Тип значения</th>
+    <th>Описание</th>
+</tr>
+<tr>
+    <td><code>this._.isShortTag(String)</code></td>
+    <td><code>Boolean</code></td>
+    <td>Проверяет, принадлежит ли указанное имя тега к списку коротких тегов (не требующих закрывающего элемента  и рекурсивной обработки). Полный список коротких тегов:<code>area</code>, <code>base</code>, <code>br</code>, <code>col</code>, <code>command</code>, <code>embed</code>, <code>hr</code>, <code>img</code>, <code>input</code>,
+    <code>keygen</code>, <code>link</code>, <code>meta</code>, <code>param</code>, <code>source</code>, <code>wbr</code>.</td>
+</tr>
+</table>
+
+<p><a name="examples"></a></p>
+<h2 id="-">Примеры и рецепты</h2>
+<p><a name="select_template"></a></p>
+<h3 id="-">Выбор шаблона по условию</h3>
+<h4 id="-">Задача</h4>
+<p>Блок <code>b-link</code> встречается в двух разновидностях:</p>
+<ul>
+<li><code>{ block: &#39;b-link&#39;, content: &#39;ссылка без URL&#39; }</code></li>
+<li><code>{ block: &#39;b-link&#39;, url: &#39;//ya.ru&#39;, content: &#39;ссылка с URL&#39; }</code></li>
+</ul>
+<p>Необходимо по-разному оформить выходной HTML-элемент в зависимости от наличия/отсутствия поля <code>url</code> в данных блока.</p>
+<h4 id="-">Решение</h4>
+<p>Следует сделать проверку на наличие поля <code>url</code> подпредикатом шаблона: выражение <code>this.ctx.url</code> будет истинным, только
+если поле <code>url</code> определено.</p>
+<pre><code class="lang-js">block(&#39;b-link&#39;)(
+  tag()(&#39;span&#39;),
+  match(this.ctx.url)(
+    tag()(&#39;a&#39;),
+    attrs()({ href: this.ctx.url })
+  )
+)
+</code></pre>
+<p><strong>Неправильно</strong> использовать для решения этой задачи условные конструкции JavaScript в теле шаблона:</p>
+<pre><code class="lang-js">block(&#39;b-link&#39;).tag()(this.ctx.url ? &#39;a&#39; : &#39;span&#39;)
+</code></pre>
+<p>При компиляции это выражение не будет оптимизировано, что отрицательно скажется на скорости работы шаблона.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#template">Синтаксис шаблонов</a></li>
+</ul>
+<p><a name="inheritage"></a></p>
+<h3 id="-">Наследование</h3>
+<h4 id="-">Задача</h4>
+<p>На разных <a href="https://ru.bem.info/method/filesystem/#levels">уровнях переопределения</a>
+определены два различных шаблона на одну и ту же БЭМ-сущность (<code>block b1</code>). Каждый из шаблонов определяет своё
+содержимое по моде <code>content</code>.</p>
+<p>Необходимо на втором уровне переопределения <strong>унаследовать</strong> содержимое, определённое на первом уровне, и добавить
+дополнительное. Требуется аналог <code>&lt;xsl:apply-imports/&gt;</code>.</p>
+<h4 id="-">Решение</h4>
+<p>В BEMHTML есть аналог <code>&lt;xsl:apply-imports/&gt;</code>. Реализация основывается на возможности заново запустить в шаблоне
+процедуру применения шаблонов к текущему контексту (<code>apply()</code>). Таким образом можно вызвать тот шаблон, который был
+определен для данного контекста (БЭМ-сущности, моды и т.п.) ранее или на другом уровне переопределения.</p>
+<p>При вычислении выражения <code>apply()</code> возвращается результат, полученный в ходе применения ранее определенного шаблона.
+Для избежания бесконечного цикла необходимо добавить подпредикат проверки наличия в контексте какого-то флага (например,
+<code>_myGuard</code>), который будет выставлен при выполнении <code>apply()</code>.</p>
+<pre><code class="lang-js">// шаблон на первом уровне переопределения
+block(&#39;b1&#39;).content()(&#39;text1&#39;)
+
+// шаблон на втором уровне переопределения
+block(&#39;b1&#39;).match(!this._myGuard).content()([
+    apply({_myGuard:true}),  // получаем предыдущее значение content
+    &#39;text2&#39;
+])
+</code></pre>
+<p>В результате применения шаблонов к блоку <code>b1</code> будет получен HTML:</p>
+<pre><code class="lang-xml">&lt;div class=&quot;b1&quot;&gt;text1text2&lt;/div&gt;
+</code></pre>
+<p>В качестве альтернативного решения можно использовать конструкцию <code>applyNext</code>, которая автоматически генерирует уникальное имя флага против
+зацикливания.</p>
+<pre><code class="lang-js">block(&#39;b1&#39;).content()(&#39;text1&#39;)
+
+block(&#39;b1&#39;).content()([
+    applyNext(), // получаем предыдущее значение content
+    &#39;text2&#39;
+])
+</code></pre>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#applynext">Конструкция applyNext</a></li>
+</ul>
+<p><a name="parentblock"></a></p>
+<h3 id="-">Выбор шаблона в зависимости от родительского элемента</h3>
+<h4 id="-">Задача</h4>
+<p>Для реализации языка разметки, аналогичного DocBook, нужны разные шаблоны для блока <code>para</code> в зависимости от контекста, в котором встречается данный блок. В частности, если блок <code>para</code> вложен в блок <code>listitem</code>, для него не нужно генерировать тег <code>&lt;p&gt;</code>.</p>
+<h4 id="-">Решение</h4>
+<p>В BEMHTML (а точнее, в XJST) нет неявного сохранения контекста для использования в предикатах — это сделано из соображений производительности.</p>
+<p>Чтобы реализовать в BEMHTML контекстную зависимость, необходимо явным образом сохранить информацию о контексте, которая потребуется при обработке вложенных блоков.</p>
+<p>Сохранение информации о контексте нужно реализовать в шаблоне для блока <code>listitem</code>. Используем флаг <code>inListItem</code>:</p>
+<pre><code class="lang-js">block(&#39;listitem&#39;).match(!this.inListItem)(apply({inListItem:true}))
+</code></pre>
+<p>Обратите внимание, на подпредикат <code>!this.inListItem</code>, позволяющий избежать зацикливания при рекурсивном вызове процедуры применения шаблонов в модифицированном контексте (<code>apply({inListItem:true})</code>).</p>
+<p>Для обработки <code>para</code>, вложенного в <code>listitem</code>, достаточно проверить наличие в контексте флага <code>inListItem</code>.</p>
+<pre><code class="lang-js">block(&#39;para&#39;).match(this.inListItem).tag()(&#39;&#39;)
+</code></pre>
+<p>Пустая строка в качестве значения шаблона по моде <code>tag</code> означает — не генерировать HTML-элемента для этого блока.</p>
+<p><a name="wrappingunit"></a></p>
+<h3 id="-">Оборачивание блока в другой блок</h3>
+<h4 id="-">Задача</h4>
+<p>Необходимо вложить блок (<code>b-inner</code>) в другой блок (<code>b-wrapper</code>) при выполнении шаблона. Таким образом, одному входному
+блоку будет соответствовать два вложенных друг в друга блока.</p>
+<h4 id="-">Решение</h4>
+<p>При обработке блока <code>b-inner</code> в шаблоне по моде <code>default</code> (генерация целого элемента) следует модифицировать фрагмент
+входного дерева <code>this.ctx</code> (добавить блок <code>b-wrapper</code>).  Для этого используется конструкция <code>applyCtx()</code>, которая присваивает <code>this.ctx</code> и применяет шаблоны по пустой моде.</p>
+<pre><code class="lang-js">block(&#39;b-inner&#39;).def()
+    .match(!this.ctx._wrapped)(function() {
+        var ctx = this.ctx;
+        ctx._wrapped = true;
+        applyCtx({ block: &#39;b-wrapper&#39;, content: ctx })
+   })
+</code></pre>
+<p>Для избежания бесконечного цикла необходимо при вызове выражения <code>applyCtx()</code> проверять наличие в контексте специального флага (<code>_wrapped</code>), который будет выставлен при выполнении <code>applyCtx()</code>.</p>
+<p><strong>NB</strong> Конструкцию <code>applyCtx()</code> можно применять для <strong>замены</strong> БЭМ-сущности в исходном дереве, если не использовать
+исходное содержимое блока (<code>this.ctx</code>) в аргументе <code>applyCtx()</code>.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#applyctx">Конструкция applyCtx</a></li>
+</ul>
+<p><a name="additionbem"></a></p>
+<h3 id="-">Добавление БЭМ-сущностей для задач вёрстки</h3>
+<h4 id="-">Задача</h4>
+<p>Необходимо сверстать блок с закруглёнными уголками, работающий во всех браузерах (без использования CSS3).</p>
+<p>Входной BEMJSON может быть таким:</p>
+<pre><code class="lang-js">{ block: &#39;box&#39;, content: &#39;text&#39; }
+</code></pre>
+<p>Реализация уголков требует добавления к блоку четырех дополнительных элементов. Поскольку данные элементы отражают
+детали HTML-верстки, ими не следует загромождать входное БЭМ-дерево. Добавить эти элементы следует на уровне
+BEMHTML-шаблона. Финальное БЭМ-дерево должно выглядеть так:</p>
+<pre><code class="lang-js">{
+    block: &#39;box&#39;,
+    content: {
+        elem: &#39;left-top&#39;,
+        content: {
+            elem: &#39;right-top&#39;,
+            content: {
+                elem: &#39;right-bottom&#39;,
+                content: {
+                    elem: &#39;left-bottom&#39;,
+                    content: &#39;text&#39;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h4 id="-">Решение</h4>
+<p>Для модификации входного БЭМ-дерева на уровне BEMHTML потребуется написать шаблон по моде <code>content</code> для блока <code>box</code>.
+Подмена фрагмента входного БЭМ-дерева (добавление необходимых элементов) выполняется с помощью конструкции <code>applyCtx()</code>,
+а подстановка исходного содержимого — с помощью конструкции <code>applyNext()</code>.</p>
+<p>BEMHTML-шаблон, выполняющий это преобразование:</p>
+<pre><code class="lang-js">block(&#39;box&#39;).match(!this.ctx._processed).content()(applyCtx({&#39;ctx._processed&#39;:true}, {
+    elem: &#39;left-top&#39;,
+    content: {
+        elem: &#39;right-top&#39;,
+        content: {
+            elem: &#39;right-bottom&#39;,
+            content: {
+                elem: &#39;left-bottom&#39;,
+                content: applyNext()
+            }
+        }
+    }
+}))
+</code></pre>
+<p><strong>NB</strong> Хеш с переменной <code>ctx._processed</code> в значении <code>true</code> передается методу <code>applyCtx</code> первым параметром, чтобы выполнить метод в модифицированном контексте.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#apply">Конструкция apply</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#applynext">Конструкция applyNext</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#applyctx">Конструкция applyCtx</a></li>
+</ul>
+<p><a name="use_bem"></a></p>
+<h3 id="-">Использование позиции БЭМ-сущности</h3>
+<h4 id="-">Задача</h4>
+<p>Необходимо пронумеровать пункты меню, начиная с 1. В текст каждого элемента меню нужно добавить его порядковый номер
+с точкой.</p>
+<h4 id="-">Решение</h4>
+<p>Используем механизм вычисления позиции БЭМ-сущности среди сиблингов (поле контекста <code>this.position</code>).
+Входные данные могут выглядеть так:</p>
+<pre><code class="lang-js">{
+  block: &#39;menu&#39;,
+  content: [
+    { elem: &#39;item&#39;, content: &#39;aaa&#39; },
+    { elem: &#39;item&#39;, content: &#39;bbb&#39; },
+    { elem: &#39;item&#39;, content: &#39;ccc&#39; }
+  ]
+}
+</code></pre>
+<p>Для выполнения нумерации следует написать шаблон по моде <code>content</code> на пункт меню, в котором содержание элемента будет
+составлено из номера позиции, разделителя (точки с пробелом) и исходного текста элемента (полученного с помощью
+конструкции <code>applyNext()</code>):</p>
+<pre><code class="lang-js">block(&#39;menu&#39;)(
+  tag()(&#39;ul&#39;),
+  elemMatch(&#39;item&#39;)(
+    tag()(&#39;li&#39;),
+    content()([
+      this.position, &#39;. &#39;,
+      applyNext()
+    ]
+  )
+))
+</code></pre>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="#content">Мода content</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#applynext">Конструкция applyNext</a></li>
+</ul>
+<p><a name="check_predicate"></a></p>
+<h3 id="-">Проверка подпредикатов в определенном порядке</h3>
+<h4 id="-">Задача</h4>
+<p>Необходимо проверять подпредикаты шаблона в строго определенном порядке, например, сначала проверить наличие в контексте
+объекта <code>this.world</code>, а затем проверить значение поля в этом объекте <code>this.world.answer</code>.</p>
+<h4 id="-">Решение</h4>
+<p>Воспользуемся тем, что подпредикат шаблона BEMHTML может быть произвольным JavaScript-выражением и запишем его
+в следующей форме:</p>
+<pre><code class="lang-js">match(this.world &amp;&amp; this.world.answer === 42)
+</code></pre>
+<p>Недостаток этого решения в том, что при компиляции это выражение не будет оптимизировано, что отрицательно скажется
+на скорости работы шаблона. В большинстве случаев можно и нужно избегать необходимости в строгом порядке проверки
+подпредикатов.</p>
+<p><a name="binding_html"></a></p>
+<h3 id="-html-id">Связывание HTML-элементов по id</h3>
+<h4 id="-">Задача</h4>
+<p>Необходимо для входного блока <code>input</code> сгенерировать пару HTML-элементов <code>&lt;label&gt;</code> и <code>&lt;input&gt;</code>, так чтобы значение
+атрибута <code>input@id</code> было сгенерировано автоматически, уникально и совпадало со значением атрибута <code>label@for</code>.</p>
+<p>Входные данные могут выглядеть так:</p>
+<pre><code class="lang-js">{
+  block: &#39;input&#39;,
+  label: &#39;My Input&#39;,
+  content: &#39;my value&#39;
+}
+</code></pre>
+<h4 id="-">Решение</h4>
+<p>Для генерации уникального идентификатора, подходящего в качестве значения атрибута <code>id</code>, воспользуемся вспомогательной
+функцией контекста <code>this.generateId()</code>. Чтобы сгенерировать два HTML-элемента на основании одного входного блока, потребуется два шаблона:</p>
+<ul>
+<li>шаблон по моде <code>tag</code>, указывающий пустую строку, чтобы отменить генерацию HTML-элемента для данного блока,
+но обработать содержимое;</li>
+<li>шаблон по моде <code>content</code>, в котором будут сформированы два необходимых элемента и их атрибуты.</li>
+</ul>
+<pre><code class="lang-js">block(&#39;input&#39;)(
+  tag()(&#39;&#39;),
+  content()([
+    {
+      tag: &#39;label&#39;,
+      attrs: { &#39;for&#39;: this.generateId() },
+      content: this.ctx.label
+    },
+    {
+      tag: &#39;input&#39;,
+      attrs: {
+        id: this.generateId(),
+        value: this.ctx.content
+      }
+    }
+  ]
+))
+</code></pre>
+<p><a name="links"></a></p>
+<h3 id="-">Смотрите также</h3>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemtree/current/bemtree/#examples">Примеры и рецепты BEMTREE</a></li>
+<li>Мастер-класс <a href="https://tech.yandex.ru/events/bemup/29-november-2013/talks/1413/">Динамический БЭМ-сайт на Node.js</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/">Шаблонизация данных в bem-core</a></li>
+<li><a href="https://ru.bem.info/technology/bemtree/current/bemtree/">BEMTREE</a></li>
+<li><a href="https://ru.bem.info/technology/bemjson/current/bemjson/">BEMJSON</a></li>
+</ul>
+</div></div></div></div><div class="footer"></div><script src="/_index.js"></script></body></html>

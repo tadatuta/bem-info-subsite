@@ -1,0 +1,476 @@
+<!DOCTYPE html><html class="ua_js_no"><head><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta charset="utf-8"/><title>BEMTREE</title><script>(function(e,c){e[c]=e[c].replace(/(ua_js_)no/g,"$1yes");})(document.documentElement,"className");(function(d,n){d.documentElement.className+=" ua_svg_"+(d[n]&&d[n]("http://www.w3.org/2000/svg","svg").createSVGRect?"yes":"no");})(document,"createElementNS");</script><link rel="stylesheet" href="/_index.css"/></head><body class="page page_theme_islands page_site_platform"><div class="header clearfix"><a class="logo header__logo" href="/"></a><div class="breadcrumbs header__breadcrumbs"><div class="breadcrumbs__item breadcrumbs__item_level_1"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/platform/">Платформа</a></div><div class="breadcrumbs__item breadcrumbs__item_level_2"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/platform/techs/">Технологии</a></div><div class="breadcrumbs__item breadcrumbs__item_level_3">BEMTREE</div></div><div class="header__item"><div class="lang-switcher"><div class="select select_mode_radio select_theme_islands select_size_m i-bem" data-bem="{&quot;select&quot;:{&quot;name&quot;:&quot;lang&quot;}}"><input class="select__control" type="hidden" name="lang" value="ru"/><button class="button button_size_m button_theme_islands button__control select__button i-bem" data-bem="{&quot;button&quot;:{}}" role="button" type="button"><span class="button__text">RU</span><i class="icon select__tick" aria-hidden="true"></i></button><div class="popup popup_target_anchor popup_theme_islands popup_autoclosable i-bem" data-bem="{&quot;popup&quot;:{&quot;directions&quot;:[&quot;bottom-left&quot;,&quot;bottom-right&quot;,&quot;top-left&quot;,&quot;top-right&quot;]}}"><div class="menu menu_size_m menu_theme_islands menu_mode_radio menu__control select__menu i-bem" data-bem="{&quot;menu&quot;:{}}" role="menu"><div class="menu-item menu-item_checked menu-item_theme_islands i-bem" data-bem="{&quot;menu-item&quot;:{&quot;val&quot;:&quot;ru&quot;}}" role="menuitem">RU</div><div class="menu-item menu-item_theme_islands i-bem" data-bem="{&quot;menu-item&quot;:{&quot;val&quot;:&quot;en&quot;}}" role="menuitem">EN</div></div></div></div></div><div class="search i-bem" data-bem="{&quot;search&quot;:{}}"><div class="search__switcher search__icon"></div><form class="form search__form control-group"><span class="input input_theme_islands input_size_l input_type_search input_has-clear search__input i-bem" data-bem="{&quot;input&quot;:{}}"><span class="input__box"><input class="input__control" name="q" type="search"/><i class="input__clear"></i></span></span><button class="button button_theme_islands button_size_l button_type_submit button_view_action button__control i-bem" data-bem="{&quot;button&quot;:{}}" role="button" type="submit"><i class="icon search__icon" aria-hidden="true"></i></button></form></div></div></div><ul class="nav"><li class="nav__item"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/forum/">Форум</a></li></ul><div class="main"><div class="content"><div class="post"><div><p><a name="intro"></a></p>
+<h2 id="-">Введение</h2>
+<p><strong>Данный документ</strong> представляет собой справочное руководство по шаблонизатору BEMTREE.</p>
+<p>В документе описаны:</p>
+<ul>
+<li>основные особенности BEMTREE, отличающие его от других шаблонизаторов;</li>
+<li>порядок обработки входных данных и генерации BEMJSON;</li>
+<li>примеры решения типовых задач средствами BEMTREE.</li>
+</ul>
+<p><strong>Целевая аудитория документа</strong> — веб-разработчики и HTML-верстальщики, использующие <a href="https://ru.bem.info/method/">БЭМ-методологию</a>.</p>
+<p>Предполагается, что читатель знаком с:</p>
+<ul>
+<li>HTML</li>
+<li>JavaScript</li>
+<li>CSS</li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/reference/">BEMHTML</a></li>
+<li><a href="https://ru.bem.info/technology/bemjson/current/bemjson/">BEMJSON</a></li>
+<li><a href="https://ru.bem.info/method/">БЭМ</a></li>
+</ul>
+<p><strong>В документе не описаны</strong> настройка среды сборки и процедура сборки шаблонов, процесс получения данных от бэкенда.</p>
+<p><a name="bemtree"></a></p>
+<h2 id="-bemtree">Особенности шаблонизатора BEMTREE</h2>
+<p><a name="arch"></a></p>
+<h3 id="-">Архитектура шаблонизатора</h3>
+<p>Для обработки BEMTREE-шаблонов, используется модуль <a href="https://ru.bem.info/tools/templating-engines/bemxjst/">bem-xjst</a>, расширенный логикой из базового шаблона BEMTREE – <a href="https://github.com/bem/bem-core/blob/v2/common.blocks/i-bem/i-bem.bemtree">i-bem.bemtree</a>.</p>
+<p>Специфическая для BEMTREE логика при этом реализована на уровне базового шаблона <code>i-bem.bemtree</code>. Базовый шаблон определяет:</p>
+<ul>
+<li>набор и порядок вызова стандартных мод;</li>
+<li>доступные поля контекста.</li>
+</ul>
+<p>Подробнее об особенностях архитектуры BEMTREE читайте в соответствующей секции <a href="https://ru.bem.info/technology/bemhtml/current/templating/#bemx_arch">документа по шаблонизации данных в <code>bem-core</code></a>.</p>
+<p><a name="uts"></a></p>
+<h3 id="-bem-xjst-">Поддержка BEM-XJST-шаблонизации</h3>
+<p>BEMTREE – <a href="https://ru.bem.info/technology/bemhtml/current/templating/#bemx_intro">BEM-XJST-шаблонизатор</a>. Иначе говоря, BEMTREE использует <strong>синтаксис-BEM-XJST</strong> и сохраняет все особенности BEM-XJST-шаблонизаторов, такие как:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#bem_area">привязка к БЭМ-предметной области</a>;</li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#decl_templatе">декларативные шаблоны</a>;</li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#language">язык описания и исполнения шаблонов – JavaScript</a>;</li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#restrictions">ограничения на уровне соглашений</a>.</li>
+</ul>
+<p><a name="basic"></a></p>
+<h2 id="-">Основные понятия</h2>
+<p><a name="template"></a></p>
+<h3 id="-">Кратко о шаблонизации</h3>
+<p>BEMTREE – шаблонизатор, рассчитанный на использование в связке с шаблонизатором BEMHTML.</p>
+<p>BEMHTML поэлементно преобразует входное БЭМ-дерево в выходной HTML-документ.</p>
+<p>Структура входного БЭМ-дерева должна быть максимально ориентирована на <strong>представление</strong> (view), чтобы при генерации HTML-дерева не требовалось изменять набор и порядок блоков и элементов.</p>
+<p>Приведение БЭМ-дерева к такому развернутому виду и является задачей технологии BEMTREE.</p>
+<p><a name="data"></a></p>
+<h3 id="-">Схемы работы с данными</h3>
+<p>Технология BEMTREE не привязана к конкретной архитектуре взаимодействия с бэкендом.</p>
+<p>На практике в BEMTREE-проектах обычно используются следующие подходы к работе с поставщиками данных:</p>
+<ul>
+<li>централизованный;</li>
+<li>работа на уровне BEMTREE-шаблонов блока.</li>
+</ul>
+<p>Каждый из подходов обладает рядом особенностей, которые стоит учитывать при выборе схемы работы с бэкендом.</p>
+<h4 id="-">Централизованное получение данных</h4>
+<p>При таком подходе взаимодействие с бэкендом осуществляет отдельный модуль – <strong>контроллер</strong>.</p>
+<p>Контроллер по запросу от браузера (или другому событию) отправляет запрос к бэкенду и сохраняет полученный ответ. Сохранение может производиться в глобальную переменную, в свойство глобального объекта или иным образом.</p>
+<p>BEMTREE-шаблон блока устанавливает соответствие между полями глобального объекта или переменной и БЭМ-сущностями в результирующем BEMJSON.</p>
+<p>Таким образом, шаблон не содержит никаких сведений о том, как были получены данные. Равно как и контроллер не заботится об их дальнейшем представлении.</p>
+<p>При таком подходе наиболее четко реализуется принцип отделения контроллера от представления данных. Это удобно для случаев, когда:</p>
+<ul>
+<li>Структура и содержимое страницы известны на момент ее формирования.</li>
+<li>Блоки не должны зависеть от схемы получения данных (например, для использования во внешних проектах, библиотеках и т.д.).</li>
+<li>Данные поставляются небольшим постоянным числом источников. Например, одной СУБД.</li>
+</ul>
+<p><strong>NB</strong> Обратите внимание, что при централизованном подходе к работе с данными объект данных, полученный от бэкенда, должен быть полностью сформирован на момент выполнения BEMTREE-шаблона.</p>
+<h4 id="-bemtree-">Получение данных внутри BEMTREE-шаблона блока</h4>
+<p>Использование такой схемы оправданно в случае, если блок получает данные от источника, которым пользуется только он сам. Тогда теряется смысл в отделении контроллера, т.к. его функциональность не востребована в других блоках.</p>
+<p>Примером могут послужить разнообразные виджеты: прогноз погоды, счетчики, свежие посты в блоге, курсы валют и т.д.</p>
+<p>Основное преимущество такой схемы – высокая автономность блоков. В них содержится логика как для получения, так и для представления данных.</p>
+<p><a name="inputdata"></a></p>
+<h3 id="-bemjson">Входные и результирующие данные: BEMJSON</h3>
+<p>Поскольку BEMTREE основан на JavaScript, стандартным форматом представления БЭМ-дерева выбрана структура данных (объект) JavaScript с набором дополнительных соглашений о представлении БЭМ-сущностей — BEMJSON.</p>
+<p>BEMJSON служит входными и выходными данными для шаблонизатора BEMTREE. Входное БЭМ-дерево представляет собой каркас веб-страницы, который в процессе работы шаблонизатора поэлементно наполняется данными.</p>
+<p>Входной BEMJSON может состоять из описания всего одной БЭМ-сущности, с которой начинается выполнение BEMTREE-шаблонов проекта – <strong>точки входа</strong>. Например, мы вызываем BEMTREE-шаблон для блока <code>page</code>:</p>
+<pre><code class="lang-js">BEMTREE.apply({ block: &#39;page&#39; })
+</code></pre>
+<p>Тогда в BEMTREE-шаблон для БЭМ-сущности – точки входа – включаются ссылки на другие БЭМ-сущности. Например:</p>
+<pre><code class="lang-js">block(&#39;page&#39;).content()([{ block: &#39;header&#39; }, { block: &#39;main&#39; }, ...])
+</code></pre>
+<p>В ходе обработки шаблона, шаблонизатор рекурсивно вызовет BEMTREE-шаблоны, на которые тот ссылался. Например:</p>
+<pre><code class="lang-js">block(&#39;header&#39;).content()([{ block: &#39;logo&#39; }, { block: &#39;menu&#39;, content: { elem: &#39;item&#39; }}])
+</code></pre>
+<p>Таким образом поэлементно выстраивается БЭМ-дерево всего документа.</p>
+<p><a name="templatebemjson"></a></p>
+<h3 id="-">Шаблон, мода и контекст</h3>
+<p>Понятия <strong>шаблона</strong>, <strong>моды</strong> и <strong>контекста</strong> являются базовыми для BEM-XJST и полностью применимы к BEMTREE.</p>
+<p>Вы можете ознакомиться с подробной информацией о них в соответствующих разделах документации по шаблонизации в bem-core:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#template_ingeneral">Шаблон</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#moda">Мода</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#context">Контекст</a></li>
+</ul>
+<p><a name="syntax"></a></p>
+<h3 id="-">Синтаксис шаблонов</h3>
+<p>BEMTREE-шаблоны создаются с помощью <a href="https://ru.bem.info/technology/bemhtml/current/templating/#unity">BEM-XJST-синтаксиса шаблонов</a>.</p>
+<p>На практике это означает, что в BEMTREE-шаблонах могут быть использованы все те же синтаксические конструкции, которые доступны в BEMHTML-шаблонах.</p>
+<p>Все синтаксические отличия от BEMHTML заключается в доступных наборах полей контекста и стандартных мод (включая хелперы для их записи).</p>
+<p><a name="standardmoda"></a></p>
+<h2 id="-">Стандартные моды</h2>
+<p>В базовом шаблоне BEMTREE определен набор стандартных мод, которые задают порядок обхода входного БЭМ-дерева (BEMJSON) и генерации выходного BEMJSON, используемый BEMTREE по умолчанию.</p>
+<p>По функциональности моды разделяются на два класса:</p>
+<ul>
+<li><strong>«Пустая» мода</strong> определяет алгоритм обхода узлов входного BEMJSON и вызова остальных мод.</li>
+<li>Все остальные моды определяют порядок генерации выходного BEMJSON. В каждой из таких мод формируется тот или иной фрагмент выходного BEMJSON-дерева.</li>
+</ul>
+<p>Для генерации BEMJSON в каждой моде вызывается процедура выбора и выполнения подходящего шаблона (предикат которого истинен в данном контексте). Результат вычисления тела выбранного шаблона подставляется в тот фрагмент BEMJSON-дерева (БЭМ-сущность), за генерацию которого отвечает данная мода.</p>
+<p>Данная логика работы накладывает следующие ограничения на шаблоны:</p>
+<ul>
+<li>Если шаблон выводит какие-то данные в BEMJSON, в его предикате должна быть указана мода.</li>
+<li>В предикате шаблона может быть указано не более одной моды.</li>
+<li>В результате вычисления тела шаблона должен возвращаться тот тип объекта, который ожидается в рамках данной моды.</li>
+</ul>
+<p>В последующих разделах моды перечислены в порядке их вызова при обработке элемента входного BEMJSON.</p>
+<p>Моды BEMTREE полностью аналогичны модам BEMHTML, за тем исключением, что в BEMTREE отсутствуют моды, отвечающие за генерацию фрагментов HTML-элемента (классов, атрибутов и т.п.).</p>
+<p>Таким образом, в BEMTREE-шаблонах помимо пустой моды, определяющей алгоритм обхода входного БЭМ-дерева и вызова остальных мод, доступны только две моды:</p>
+<ul>
+<li>мода <code>default</code>,  которая отвечает за генерацию элемента БЭМ-дерева в
+целом. Обычно используется для замены контекстной сущности (например, чтобы <a href="#wrappingunit">обернуть блок в другой блок</a>);</li>
+<li>мода <code>content</code>, описывающая содержимое текущего элемента БЭМ-дерева.</li>
+</ul>
+<p><a name="empty_moda"></a></p>
+<h3 id="-">«Пустая» мода (<code>&quot;&quot;</code>)</h3>
+<p><em>Тип значения тела шаблона:</em> <code>не используется</code></p>
+<p>Пустая (не определенная) мода соответствует моменту, когда значение поля контекста <code>this._mode</code> равно пустой стоке (<code>&quot;&quot;</code>). Это значение выставляется:</p>
+<ul>
+<li>перед началом обработки входного дерева;</li>
+<li>в момент рекурсивного вызова процедуры обхода дерева в моде <code>default</code>.</li>
+</ul>
+<p>Действие, выполняемое в рамках пустой моды, зависит от типа контекстного (текущего) элемента входного BEMJSON-дерева.</p>
+<table>
+<tr>
+    <th>Тип элемента</th>
+    <th>Действие</th>
+</tr>
+<tr>
+    <td><b>БЭМ-сущность</b>(блок или элемент)</td>
+    <td>Выставление значений в служебных полях контекста (<code>block elem mods elemMods ctx position</code>)
+    и вызов шаблонов по моде <code>default</code>.</td>
+</tr>
+
+<tr>
+    <th>строка/число</th>
+    <td>Вывод значения, приведенного к строке, в буфер BEMJSON-результата.</td>
+</tr>
+<tr>
+    <th>Boolean, undefined, null</th>
+    <td>Вывод пустой строки в буфер BEMJSON-результата.</td>
+</tr>
+<tr>
+    <th>массив</th>
+    <td>Итерация по массиву с рекурсивным вызовом шаблонов по пустой моде.</td>
+</tr>
+</table>
+
+<p>Определение шаблона по пустой моде (подпредикат <code>mode(this._mode === &#39;&#39;)</code>) имеет смысл только в том случае, если необходимо
+переопределить принцип обхода входного дерева.</p>
+<p>Вызов шаблонов по пустой моде (конструкция <code>apply(&#39;&#39;)</code> в теле шаблона) необходим, если требуется отклониться от однозначного соответствия «входная БЭМ-сущность — выходной BEMJSON-элемент» и, например, сгенерировать более одного элемента на одну входную сущность. В частности, такой вызов осуществляется автоматически при использовании
+<a href="https://ru.bem.info/technology/bemhtml/current/templating/#applyctx">конструкции applyCtx</a>.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="#wrappingunit">Оборачивание блока в другой блок</a></li>
+</ul>
+<p><a name="default"></a></p>
+<h3 id="default">default</h3>
+<p><em>Тип значения тела шаблона:</em> <code>не используется</code></p>
+<p>В рамках моды <code>default</code> полностью формируется выходной BEMJSON-элемент, соответствующий входной БЭМ-сущности.</p>
+<p>В ходе выполнения моды <code>default</code> происходит:</p>
+<ul>
+<li>вызов всех остальных стандартных мод, отвечающих за формирование отдельных аспектов BEMJSON-элемента;</li>
+<li>объединение результатов выполнения всех вызываемых мод в результирующий BEMJSON;</li>
+<li>рекурсивный вызов шаблонов на результат выполнения моды <code>content</code>.</li>
+</ul>
+<p>Определение шаблона по моде <code>default</code> (подпредикат <code>def()</code>) необходимо в тех случаях, когда нужно переопределить процедуру генерации выходного фрагмента BEMJSON. Для примера, создадим BEMTREE-шаблон для блока <a href="https://github.com/bem/bem-core/blob/v2/common.blocks/page/page.bemhtml">page</a> с уровня переопределения <code>common.blocks</code>:</p>
+<pre><code class="lang-js">block(&#39;page&#39;).def()(function() {
+    return applyCtx({
+        block: this.block,
+        title: this.ctx.title,
+        head: [{ elem: &#39;js&#39;, url: this.ctx.js }],
+        content: {
+            block: &#39;foo&#39;,
+            content: this.ctx.foo
+        }
+    });
+});
+</code></pre>
+<p>Здесь для модификации объекта входных данных <code>this.ctx</code> используется конструкция <code>applyCtx</code>. С ее помощью присваиваются значения различным полям объекта в момент вызова по моде <code>default</code>, а затем автоматически осуществляется вызов процедуры выбора и применения шаблона <code>apply()</code>.</p>
+<p>Шаблон формирует в контексте произвольные поля <code>title</code> и <code>head</code>, значения которых в дальнейшем используются BEMHTML-шаблоном блока.</p>
+<p><a name="content"></a></p>
+<h3 id="content">content</h3>
+<ul>
+<li><em>Тип значения тела шаблона:</em> <code>BEMJSON</code></li>
+<li><em>Значение по умолчанию:</em> <code>this.ctx.content</code></li>
+</ul>
+<p>В рамках моды <code>content</code> вычисляется содержимое BEMJSON-элемента, в качестве которого может выступать произвольный BEMJSON (как строка или число, так и дерево БЭМ-сущностей). В качестве значения по умолчанию используется значение поля <code>content</code> контекстной БЭМ-сущности (<code>this.ctx.content</code>).</p>
+<p>Определение шаблона по моде <code>content</code> (подпредикат <code>content()</code>) необходимо, если:</p>
+<ul>
+<li>Необходимо на уровне шаблонизатора добавить содержимое для сущности, у которой отсутствует <code>content</code> во входном BEMJSON.</li>
+<li>Необходимо подменить содержимое сущности на уровне шаблонизатора.</li>
+</ul>
+<table>
+<tr>
+    <th>Входные данные</th>
+    <th>Шаблон</th>
+    <th>Результирующий BEMJSON</th>
+</tr>
+
+<tr>
+    <td>
+        <pre><code>{
+  block: &#39;b1&#39;
+}</code></pre>
+    </td>
+    <td>
+        <pre><code>block(&#39;b1&#39;).content()({
+  block: &#39;b2&#39;
+})</code></pre>
+    </td>
+    <td><pre><code>{ block: &#39;b1&#39;, content: { block: &#39;b2&#39; } }</code></pre>
+</td>
+</tr>
+</table>
+
+
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="#inheritage">Наследование</a></li>
+<li><a href="#additionbem">Добавление БЭМ-сущностей к БЭМ-дереву</a></li>
+</ul>
+<p><a name="context_field"></a></p>
+<h2 id="-">Поля контекста</h2>
+<p>В процессе работы шаблонизатор строит структуру данных, содержащую сведения об обрабатываемом узле BEMJSON и о состоянии процесса обработки. Помимо этого в контексте доступен ряд вспомогательных функций.</p>
+<p>В момент выполнения шаблона контекст доступен в виде объекта, обозначаемого ключевым словом <code>this</code>. Обращение к контексту возможно как в предикате, так и в теле шаблона.</p>
+<p>Автор шаблонов имеет возможность определить любые дополнительные поля в контексте.</p>
+<p>Все поля контекста можно разделить на две категории:</p>
+<ul>
+<li><strong>Контекстно-зависимые</strong>, значение которых изменяется в зависимости от обрабатываемого узла и фазы процесса обработки.</li>
+<li><strong>Контекстно-независимые</strong>, значение которых постоянно.</li>
+</ul>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#context">Контекст</a></li>
+</ul>
+<p><a name="contextdependent"></a></p>
+<h3 id="-">Контекстно-зависимые поля</h3>
+<p>Базовый шаблон технологии BEMTREE не добавляет никаких контекстно-зависимых полей помимо, <a href="https://ru.bem.info/technology/bemhtml/current/templating/#contextdependent">общих для BEM-XJST</a>.</p>
+<p><a name="context_independent"></a></p>
+<h3 id="-">Контекстно-независимые поля</h3>
+<p>Все контекстно-независимые поля сгруппированы в объекте <code>this._</code> и представляют собой вспомогательные функции, используемые при работе шаблонизатора. Автор шаблонов также может пользоваться этими функциями как в теле шаблонов, так и в предикатах.</p>
+<p>BEMTREE расширяет набор <a href="https://ru.bem.info/technology/bemhtml/current/templating/#context_independent">контекстно-независимых полей BEM-XJST</a> только одним методом – <code>this.doAsync</code>.</p>
+<table>
+<tr>
+    <th>Поле</th>
+    <th>Тип значения</th>
+    <th>Описание</th>
+</tr>
+    <td><code>this.doAsync(Function)</code></td>
+    <td><code>Function</code></td>
+    <td>Асинхронно выполняет функцию, переданную в качестве аргумента. Обычно используется для отправки асинхронных запросов к бэкенду. Функция возвращает промис, объект результата которого содержит поля с информацией о контекстной БЭМ-сущности.</td>
+</tr>
+</table>
+
+
+<p><a name="examples"></a></p>
+<h2 id="-">Примеры и рецепты</h2>
+<p><a name="bringing_input"></a></p>
+<h3 id="-">Приведение входных данных к формату, ориентированному на представление</h3>
+<h4 id="-">Задача</h4>
+<p>Сформировать входное БЭМ-дерево для страницы френдленты (список постов с указанием информации об авторе), удобное для обработки в терминах шаблонов BEMHTML. Такое дерево должно быть ориентировано на представление, т.е. набор и порядок БЭМ-сущностей должен соответствовать набору и порядку DOM-узлов выходного HTML.</p>
+<h4 id="-">Решение</h4>
+<p>Бэкенд обычно работает с нормализованными данными (data-ориентированный формат). В случае френдленты формат исходных данных может быть таким:</p>
+<pre><code class="lang-js">{
+    posts: [ { text: &#39;post text 1&#39;, author: &#39;login1&#39; },  { text: &#39;post text 2&#39;, author: &#39;login2&#39; }… ],
+    users:  { &#39;login1&#39;: { userpic: &#39;URL&#39;, name: &#39;Full Name 1&#39; }, &#39;login2&#39;: { userpic: &#39;URL&#39;, name: &#39;Full Name 2&#39; } … },
+}
+</code></pre>
+<p>Данные представлены в нормализованном виде. В списке постов используется только идентификатор пользователя, а полная информация о пользователе находится в соответствующем хеше в списке пользователей. Один пользователь может быть автором нескольких постов.</p>
+<p>Формат данных, ориентированный на представление, предполагает денормализацию данных, т.е. развертывание списка постов таким образом, чтобы в каждом посте содержалась полная информация об авторе, даже если в списке присутствует несколько постов одного автора. В BEMJSON подобный формат может выглядеть так:</p>
+<pre><code class="lang-js">{
+    block: &#39;posts&#39;,
+    content: [
+        {
+            block: &#39;post&#39;,
+            content: [
+                { block: &#39;userpic&#39;, content: &#39;URL&#39; },
+                { block: &#39;user&#39;, content: &#39;Full Name 1&#39; },
+                { elem: &#39;text&#39;, content: &#39;post text 1&#39; }
+            ]
+        },
+        {
+            block: &#39;post&#39;,
+            content: [
+                { block: &#39;userpic&#39;, content: &#39;URL&#39; },
+                { block: &#39;user&#39;, content: &#39;Full Name 2&#39; },
+                { elem: &#39;text&#39;, content: &#39;post text 2&#39; }
+            ]
+        },
+        …
+    ]
+}
+</code></pre>
+<p>Предположим, что исходные данные сохранены в поле контекста <code>this.ctx.data</code>. Тогда BEMTREE-шаблон, осуществляющий нужное преобразование, может иметь такой вид:</p>
+<pre><code class="lang-js"> block(&#39;posts&#39;).content()(function() {
+    var data = this.ctx.data;
+
+    return data.posts.map(function(post) {
+        var user = data.users[post.author];
+
+        return {
+            block: &#39;post&#39;,
+            content: [
+                { block: &#39;userpic&#39;, content: user.userpic },
+                { block: &#39;user&#39;, content: user.name },
+                { elem: &#39;text&#39;, content: post.text }
+            ]
+        };
+    });
+});
+</code></pre>
+<p><a name="inheritage"></a></p>
+<h3 id="-">Наследование</h3>
+<h4 id="-">Задача</h4>
+<p>На разных <a href="https://ru.bem.info/method/filesystem/#levels">уровнях переопределения</a>
+определены два различных шаблона на одну и ту же БЭМ-сущность (<code>block b1</code>). Каждый из шаблонов определяет своё содержимое по моде <code>content</code>.</p>
+<p>Необходимо на втором уровне переопределения <strong>унаследовать</strong> содержимое, определённое на первом уровне, и добавить дополнительное. Требуется аналог <code>&lt;xsl:apply-imports/&gt;</code>.</p>
+<h4 id="-">Решение</h4>
+<p>В BEMTREE есть аналог <code>&lt;xsl:apply-imports/&gt;</code>. Реализация основывается на возможности заново запустить в шаблоне процедуру применения шаблонов к текущему контексту (<code>apply()</code>). Таким образом можно вызвать тот шаблон, который был определен для данного контекста (БЭМ-сущности, моды и т.п.) ранее или на другом уровне переопределения.</p>
+<p>При вычислении выражения <code>apply()</code> возвращается результат, полученный в ходе применения ранее определенного шаблона.
+Для избежания бесконечного цикла необходимо добавить подпредикат проверки наличия в контексте какого-то флага (например, <code>_myGuard</code>), который будет выставлен при выполнении <code>apply()</code>.</p>
+<pre><code class="lang-js">// шаблон на первом уровне переопределения
+block(&#39;b1&#39;).content()(&#39;text1&#39;)
+
+// шаблон на втором уровне переопределения
+block(&#39;b1&#39;).match(!this._myGuard).content()([
+    apply({_myGuard:true}),  // получаем предыдущее значение content
+    &#39;text2&#39;
+])
+</code></pre>
+<p>В результате применения шаблонов к блоку <code>b1</code> будет получен BEMJSON:</p>
+<pre><code class="lang-js">{ block: &#39;b1&#39;, content: &#39;text1text2&#39; }
+</code></pre>
+<p>В качестве более простого решения можно использовать конструкцию <code>applyNext</code>, которая автоматически генерирует уникальное имя флага против зацикливания.</p>
+<pre><code class="lang-js">block(&#39;b1&#39;).content()(&#39;text1&#39;)
+
+block(&#39;b1&#39;).content()([
+    applyNext(), // получаем предыдущее значение content
+    &#39;text2&#39;
+])
+</code></pre>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#applynext">Конструкция applyNext</a></li>
+</ul>
+<p><a name="wrappingunit"></a></p>
+<h3 id="-">Оборачивание блока в другой блок</h3>
+<h4 id="-">Задача</h4>
+<p>Необходимо вложить блок (<code>b-inner</code>) в другой блок (<code>b-wrapper</code>) при выполнении шаблона. Таким образом, одному входному блоку будет соответствовать два вложенных друг в друга блока.</p>
+<h4 id="-">Решение</h4>
+<p>При обработке блока <code>b-inner</code> в шаблоне по моде <code>default</code> (генерация целого элемента) следует модифицировать фрагмент входного дерева <code>this.ctx</code> (добавить блок <code>b-wrapper</code>).  Для этого используется конструкция <code>applyCtx()</code>, которая присваивает <code>this.ctx</code> и применяет шаблоны по пустой моде.</p>
+<pre><code class="lang-js">block(&#39;b-inner&#39;).def()
+    .match(!this.ctx._wrapped)(function() {
+        var ctx = this.ctx;
+        ctx._wrapped = true;
+        applyCtx({ block: &#39;b-wrapper&#39;, content: ctx })
+   })
+</code></pre>
+<p>Во избежание бесконечного цикла необходимо при вызове выражения <code>applyCtx()</code> проверять наличие в контексте специального флага (<code>_wrapped</code>), который будет выставлен при выполнении <code>applyCtx()</code>.</p>
+<p><strong>NB</strong> Конструкцию <code>applyCtx()</code> можно применять для <strong>замены</strong> БЭМ-сущности в исходном дереве, если не использовать исходное содержимое блока (<code>this.ctx</code>) в аргументе <code>applyCtx()</code>.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#applyctx">Конструкция applyCtx</a></li>
+</ul>
+<p><a name="additionbem"></a></p>
+<h3 id="-">Добавление БЭМ-сущностей к БЭМ-дереву</h3>
+<h4 id="-">Задача</h4>
+<p>Необходимо сверстать блок с закруглёнными уголками, работающий во всех браузерах (без использования CSS3).</p>
+<p>Входной BEMJSON может быть таким:</p>
+<pre><code class="lang-js">{ block: &#39;box&#39;, content: &#39;text&#39; }
+</code></pre>
+<p>Реализация уголков требует добавления к блоку четырех дополнительных элементов.  Финальное БЭМ-дерево должно выглядеть так:</p>
+<pre><code class="lang-js">{
+    block: &#39;box&#39;,
+    content: {
+        elem: &#39;left-top&#39;,
+        content: {
+            elem: &#39;right-top&#39;,
+            content: {
+                elem: &#39;right-bottom&#39;,
+                content: {
+                    elem: &#39;left-bottom&#39;,
+                    content: &#39;text&#39;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h4 id="-">Решение</h4>
+<p>Для модификации входного БЭМ-дерева на уровне BEMTREE потребуется написать шаблон по моде <code>content</code> для блока <code>box</code>.
+Подмена фрагмента входного БЭМ-дерева (добавление необходимых элементов) выполняется с помощью конструкции <code>applyCtx()</code>, а подстановка исходного содержимого — с помощью конструкции <code>applyNext()</code>.</p>
+<p>BEMTREE-шаблон, выполняющий это преобразование:</p>
+<pre><code class="lang-js">block(&#39;box&#39;).match(!this.ctx._processed).content()(applyCtx({&#39;ctx._processed&#39;:true}, {
+    elem: &#39;left-top&#39;,
+    content: {
+        elem: &#39;right-top&#39;,
+        content: {
+            elem: &#39;right-bottom&#39;,
+            content: {
+                elem: &#39;left-bottom&#39;,
+                content: applyNext()
+            }
+        }
+    }
+}))
+</code></pre>
+<p><strong>NB</strong> Хеш с переменной <code>ctx._processed</code> в значении <code>true</code> передается методу <code>applyCtx</code> первым параметром, чтобы выполнить метод в модифицированном контексте.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#apply">Конструкция apply</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#applynext">Конструкция applyNext</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/#applyctx">Конструкция applyCtx</a></li>
+</ul>
+<p><a name="check_predicate"></a></p>
+<h3 id="-">Проверка подпредикатов в определенном порядке</h3>
+<h4 id="-">Задача</h4>
+<p>Необходимо проверять подпредикаты шаблона в строго определенном порядке, например, сначала проверить наличие в контексте объекта <code>this.world</code>, а затем проверить значение поля в этом объекте <code>this.world.answer</code>.</p>
+<h4 id="-">Решение</h4>
+<p>Воспользуемся тем, что подпредикат шаблона BEMTREE может быть произвольным JavaScript-выражением и запишем его в следующей форме:</p>
+<pre><code class="lang-js">match(this.world &amp;&amp; this.world.answer === 42)
+</code></pre>
+<p>Недостаток этого решения в том, что при компиляции это выражение не будет оптимизировано, что отрицательно скажется на скорости работы шаблона. В большинстве случаев можно и нужно избегать необходимости в строгом порядке проверки подпредикатов.</p>
+<p><a name="binding_html"></a></p>
+<h3 id="-html-id">Связывание HTML-элементов по id</h3>
+<h4 id="-">Задача</h4>
+<p>Необходимо для входного блока <code>input</code> сгенерировать пару HTML-элементов <code>&lt;label&gt;</code> и <code>&lt;input&gt;</code>, так чтобы значение атрибута <code>input@id</code> было сгенерировано автоматически, уникально и совпадало со значением атрибута <code>label@for</code>.</p>
+<p>Входные данные могут выглядеть так:</p>
+<pre><code class="lang-js">{
+  block: &#39;input&#39;,
+  label: &#39;My Input&#39;,
+  content: &#39;my value&#39;
+}
+</code></pre>
+<h4 id="-">Решение</h4>
+<p>Для генерации уникального идентификатора, подходящего в качестве значения атрибута <code>id</code>, воспользуемся вспомогательной функцией контекста <code>this.generateId()</code>. Чтобы сгенерировать два HTML-элемента внутри одного входного блока, потребуется шаблон по моде <code>content</code>, в котором будут сформированы два необходимых элемента и их атрибуты.</p>
+<pre><code class="lang-js">block(&#39;input&#39;)(
+  content()([
+    {
+      tag: &#39;label&#39;,
+      attrs: { &#39;for&#39;: this.generateId() },
+      content: this.ctx.label
+    },
+    {
+      tag: &#39;input&#39;,
+      attrs: {
+        id: this.generateId(),
+        value: applyNext()
+      }
+    }
+  ]
+))
+</code></pre>
+<h4 id="-">Послесловие</h4>
+<p>При создании BEMTREE-шаблонов можно использовать те же приемы, что и в BEMHTML. Если вы встретили интересное решение в BEMHTML-шаблоне – не стесняйтесь экспериментировать. Скорее всего, это решение может быть применено и к BEMTREE.</p>
+<p><strong>См. также</strong>:</p>
+<ul>
+<li>Мастер-класс <a href="https://tech.yandex.ru/events/bemup/29-november-2013/talks/1413/">Динамический БЭМ-сайт на Node.js</a></li>
+<li><a href="http://tech.yandex.ru/events/bemup/yac-bemup/talks/1354/">BEMTREE — генерируй дерево</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/reference/#examples">Примеры и рецепты BEMHTML</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/templating/">Шаблонизация данных в bem-core</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/reference/">BEMHTML</a></li>
+<li><a href="https://ru.bem.info/technology/bemjson/current/bemjson/">BEMJSON</a></li>
+</ul>
+</div></div></div></div><div class="footer"></div><script src="/_index.js"></script></body></html>

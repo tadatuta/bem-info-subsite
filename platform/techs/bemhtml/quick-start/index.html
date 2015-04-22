@@ -1,0 +1,280 @@
+<!DOCTYPE html><html class="ua_js_no"><head><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta charset="utf-8"/><title>Quick start</title><script>(function(e,c){e[c]=e[c].replace(/(ua_js_)no/g,"$1yes");})(document.documentElement,"className");(function(d,n){d.documentElement.className+=" ua_svg_"+(d[n]&&d[n]("http://www.w3.org/2000/svg","svg").createSVGRect?"yes":"no");})(document,"createElementNS");</script><link rel="stylesheet" href="/_index.css"/></head><body class="page page_theme_islands page_site_platform"><div class="header clearfix"><a class="logo header__logo" href="/"></a><div class="breadcrumbs header__breadcrumbs"><div class="breadcrumbs__item breadcrumbs__item_level_1"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/platform/">Платформа</a></div><div class="breadcrumbs__item breadcrumbs__item_level_2"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/platform/techs/">Технологии</a></div><div class="breadcrumbs__item breadcrumbs__item_level_3"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/platform/techs/bemhtml/">BEMHTML</a></div></div><div class="header__item"><div class="lang-switcher"><div class="select select_mode_radio select_theme_islands select_size_m i-bem" data-bem="{&quot;select&quot;:{&quot;name&quot;:&quot;lang&quot;}}"><input class="select__control" type="hidden" name="lang" value="ru"/><button class="button button_size_m button_theme_islands button__control select__button i-bem" data-bem="{&quot;button&quot;:{}}" role="button" type="button"><span class="button__text">RU</span><i class="icon select__tick" aria-hidden="true"></i></button><div class="popup popup_target_anchor popup_theme_islands popup_autoclosable i-bem" data-bem="{&quot;popup&quot;:{&quot;directions&quot;:[&quot;bottom-left&quot;,&quot;bottom-right&quot;,&quot;top-left&quot;,&quot;top-right&quot;]}}"><div class="menu menu_size_m menu_theme_islands menu_mode_radio menu__control select__menu i-bem" data-bem="{&quot;menu&quot;:{}}" role="menu"><div class="menu-item menu-item_checked menu-item_theme_islands i-bem" data-bem="{&quot;menu-item&quot;:{&quot;val&quot;:&quot;ru&quot;}}" role="menuitem">RU</div><div class="menu-item menu-item_theme_islands i-bem" data-bem="{&quot;menu-item&quot;:{&quot;val&quot;:&quot;en&quot;}}" role="menuitem">EN</div></div></div></div></div><div class="search i-bem" data-bem="{&quot;search&quot;:{}}"><div class="search__switcher search__icon"></div><form class="form search__form control-group"><span class="input input_theme_islands input_size_l input_type_search input_has-clear search__input i-bem" data-bem="{&quot;input&quot;:{}}"><span class="input__box"><input class="input__control" name="q" type="search"/><i class="input__clear"></i></span></span><button class="button button_theme_islands button_size_l button_type_submit button_view_action button__control i-bem" data-bem="{&quot;button&quot;:{}}" role="button" type="submit"><i class="icon search__icon" aria-hidden="true"></i></button></form></div></div></div><ul class="nav"><li class="nav__item nav__item_current">Quick start</li><li class="nav__item"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" href="/forum/">Форум</a></li></ul><div class="main"><div class="content"><div class="post"><div><h1 id="hello-bemhtml-">Hello, BEMHTML!</h1>
+<p>Данное руководство поможет попробовать шаблонизатор BEMHTML и
+понять основные принципы работы с ним, пройдя семь простых шагов:</p>
+<ul>
+<li><a href="#init">Шаг 1. Инициализировать проект</a>.</li>
+<li><a href="#page">Шаг 2. Создать макет страницы</a>.</li>
+<li><a href="#block">Шаг 3. Добавить блок</a>.</li>
+<li><a href="#template">Шаг 4. Написать шаблон: приветствие по образцу</a>.</li>
+<li><a href="#array">Шаг 5. Переписать шаблон: генерация списка по массиву элементов</a>.</li>
+<li><a href="#tags">Шаг 6. Дополнить шаблон: модифицировать HTML-теги</a>.</li>
+<li><a href="#cssjs">Шаг 7. Настроить оформление и поведение блока (CSS и JS)</a>.</li>
+</ul>
+<p><a name="init"></a></p>
+<h2 id="-1-">Шаг 1. Инициализировать проект</h2>
+<p>Чтобы создать новый BEMHTML-проект, скопируем себе шаблон проекта, подготовленный разработчиками БЭМ, и установим <code>npm</code>-зависимости.</p>
+<pre><code>$ git clone https://github.com/bem/project-stub.git project-hello
+$ cd project-hello
+$ npm install
+</code></pre><p>Здесь выполняется:</p>
+<ul>
+<li>копирование заготовки проекта в локальный каталог <code>project-hello</code>;</li>
+<li>локальная установка <code>npm</code>-зависимостей в каталог созданного проекта (симлинки на исполняемые файлы будут созданы в <code>./project-hello/node_modules/.bin/</code>);</li>
+<li>установка <code>bower</code>-зависимостей (библиотеки <code>bem-core</code> и <code>bem-components</code>).</li>
+</ul>
+<p><strong>NB</strong> Для сборки проекта необходима утилита <code>enb</code> или <code>bem</code> (bem-tools).</p>
+<p>Организовать цикл разработки (правка—компиляция—просмотр—правка...) поможет сервер для разработки.
+Запускать его нужно в корневой папке проекта:</p>
+<pre><code>$ npm start
+</code></pre><p>Сервер принимает соединения по адресу <code>http://localhost:8080/</code> и выполняет сборку страницы по
+запросу от браузера, например: <code>http://localhost:8080/desktop.bundles/index/index.html</code>.</p>
+<p><a name="page"></a></p>
+<h2 id="-2-">Шаг 2. Создать макет страницы</h2>
+<p>Макеты статических HTML-страниц размещаются в каталоге <code>desktop.bundles</code>.</p>
+<p>Создать макет пустой страницы (назовем ее <code>test</code>):</p>
+<pre><code>$ ./node_modules/.bin/bem create -l desktop.bundles -b test
+</code></pre><p><strong>NB</strong> Язык описания макета статической страницы (БЭМ-дерева) — BEMJSON.</p>
+<p>Посмотрим исходный код страницы (<code>desktop.bundles/test/test.bemjson.js</code>):</p>
+<pre><code class="lang-javascript">({
+    block: &#39;page&#39;,
+    title: &#39;test&#39;,
+    head: [
+        { elem: &#39;css&#39;, url: &#39;_test.css&#39; }
+    ],
+    scripts: [
+        { elem: &#39;js&#39;, url:&#39;_test.js&#39;}
+    ],
+    content: [
+        &#39;block content&#39;
+    ]
+})
+</code></pre>
+<p>Здесь используется:</p>
+<ul>
+<li>блок <code>page</code> из библиотеки блоков <code>bem-core</code>.</li>
+</ul>
+<p><strong>NB</strong> В проекте подключены библиотеки блоков <code>bem-core</code> и <code>bem-components</code>. Мы можем использовать и модифицировать блоки оттуда.</p>
+<p>Просмотрим результат сборки страницы в браузере: <code>http://localhost:8080/desktop.bundles/test/test.html</code></p>
+<h3 id="-">Подробнее</h3>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemjson/current/bemjson/">Справочник по BEMJSON</a></li>
+<li><a href="https://ru.bem.info/libs/bem-core/">Библиотека блоков bem-core</a></li>
+<li><a href="https://ru.bem.info/libs/bem-components/">Библиотека блоков bem-components</a></li>
+<li><a href="https://ru.bem.info/tools/bem/bem-tools/">Документация по bem-tools</a></li>
+<li><a href="https://ru.bem.info/tools/bem/enb-bem-techs/">Документация по ENB</a></li>
+</ul>
+<p><a name="block"></a></p>
+<h2 id="-3-">Шаг 3. Добавить блок</h2>
+<p>Сделаем очень простой макет — разместим на нашей новой странице <code>test</code> один блок приветствия с текстом <code>Hello, BEMHTML!</code>.</p>
+<p>Отредактируем исходный BEMJSON (<code>desktop.bundles/test/test.bemjson.js</code>):</p>
+<pre><code class="lang-javascript">({
+    block: &#39;page&#39;,
+    title: &#39;test&#39;,
+    head: [
+        { elem: &#39;css&#39;, url: &#39;_test.css&#39; }
+    ],
+    scripts: [
+        { elem: &#39;js&#39;, url:&#39;_test.js&#39;}
+    ],
+    content: [
+        {
+            block: &#39;hello&#39;,
+            content: &#39;Hello, BEMHTML!&#39;
+        }
+    ]
+})
+</code></pre>
+<p>Здесь:</p>
+<ul>
+<li>блок <code>hello</code> поместили в содержание страницы (поле <code>content</code> блока <code>page</code>);</li>
+<li>текст приветствия — в поле <code>content</code> блока <code>hello</code>.</li>
+</ul>
+<p><strong>NB</strong> Если в проекте не определены шаблоны блока, HTML генерируется базовыми шаблонами из библиотеки <code>bem-core</code>.</p>
+<p>Просмотрим результат. Фрагмент HTML-кода, описывающий тело страницы, выглядит так:</p>
+<pre><code class="lang-html">&lt;body class=&quot;page page_theme_islands&quot;&gt;
+    &lt;div class=&quot;hello&quot;&gt;Hello, BEMHTML!&lt;/div&gt;
+    &lt;script src=&quot;_test.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<p>Здесь:</p>
+<ul>
+<li>блоку <code>hello</code> соответствует элемент <code>div</code>;</li>
+<li>в атрибуте <code>class</code> указано имя блока.</li>
+</ul>
+<p><a name="template"></a></p>
+<h2 id="-4-">Шаг 4. Написать шаблон: приветствие по образцу</h2>
+<p>Сделаем блок <code>hello</code> более универсальным — пусть он генерирует приветствие
+для указанного имени.  Указывая разные имена, можно будет использовать один и
+тот же блок <code>hello</code> на разных страницах или многократно на одной странице.</p>
+<p><strong>NB</strong> Объекты BEMJSON могут содержать произвольные поля данных,
+а шаблоны могут использовать эти поля.</p>
+<p>Создадим в нашем блоке поле <code>name</code> для хранения имени пользователя. Исправим <code>test.bemjson.js</code>:</p>
+<pre><code>{ block: &#39;hello&#39;, name: &#39;BEMHTML&#39; }
+</code></pre><p>Теперь, чтобы генерировать шаблонный текст приветствия, нам нужно создать в проекте файлы для блока <code>hello</code> и определить BEMHTML-шаблон.</p>
+<p>Блоки, определённые в проекте, размещаются в каталоге <code>desktop.blocks</code>. Каталог для блока и нужные файлы удобно создавать с помощью команды <code>bem create</code>:</p>
+<pre><code>$ ./node_modules/.bin/bem create -l desktop.blocks -b hello
+</code></pre><p>Напишем шаблон для блока <code>hello</code> в файле <code>desktop.blocks/hello/hello.bemhtml</code>:</p>
+<pre><code class="lang-javascript">block(&#39;hello&#39;).content()(function() {
+    return [&#39;Hello, &#39;, this.ctx.name, &#39;!&#39;];
+});
+</code></pre>
+<p>Здесь:</p>
+<ul>
+<li><code>block(&#39;hello&#39;).content()</code> — предикат шаблона (будет вызван при обработке блока <code>hello</code> в стандартной моде <code>content</code>);</li>
+<li><code>function() { return [&#39;Hello, &#39;, this.ctx.name, &#39;!&#39;]; }</code> — тело шаблона (при выводе в HTML выполняется конкатенация строк — элементов массива);</li>
+<li><code>this.ctx.name</code> — поле контекста, соответствует полю <code>name</code> в исходном BEMJSON блока.</li>
+</ul>
+<p><strong>NB</strong> Этапы генерации HTML, не переопределённые в пользовательских шаблонах, выполняются базовыми шаблонами библиотеки <code>bem-core</code>.</p>
+<p>HTML-результат:</p>
+<pre><code class="lang-html">&lt;body class=&quot;page page_theme_islands&quot;&gt;
+    &lt;div class=&quot;hello&quot;&gt;Hello, BEMHTML!&lt;/div&gt;
+    &lt;script src=&quot;_test.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<h3 id="-">Подробнее</h3>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/bemhtml-js-syntax/">Синтаксис BEMHTML</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/reference/#standardmoda">Стандартные моды</a></li>
+<li><a href="https://ru.bem.info/technology/bemhtml/current/reference/#context_field">Поля контекста</a></li>
+</ul>
+<p><a name="array"></a></p>
+<h2 id="-5-">Шаг 5. Переписать шаблон: генерация списка по массиву элементов</h2>
+<p>С развитием проекта может понадобиться усложнить блок <code>hello</code>.
+Для примера представим, что нам требуется выводить сразу несколько приветствий для заданного списка имен.</p>
+<p>В этом случае удобно в исходных данных вместо одного имени в поле <code>name</code> поместить список имен в виде массива строк в поле <code>names</code>.
+Теперь <code>test.bemjson.js</code> выглядит так:</p>
+<pre><code>{ block: &#39;hello&#39;, names: [&#39;BEM&#39;, &#39;BEMJSON&#39;, &#39;BEMHTML&#39;] }
+</code></pre><p>Следуя БЭМ-методологии, каждое приветствие правильнее представить как элемент <code>item</code>, вложенный в блок <code>hello</code>.
+Иначе говоря, мы хотели бы получить такое БЭМ-дерево при наложении шаблона:</p>
+<pre><code class="lang-javascript">{
+    block: &#39;hello&#39;,
+    content: [
+        { elem: &#39;item&#39;, content: &#39;BEM&#39; },
+        { elem: &#39;item&#39;, content: &#39;BEMJSON&#39; },
+        { elem: &#39;item&#39;, content: &#39;BEMHTML&#39; }
+    ]
+}
+</code></pre>
+<p><strong>NB</strong> BEMHTML-шаблоны позволяют на лету модифицировать входной BEMJSON (БЭМ-дерево).</p>
+<p>Задача шаблона теперь заключается в том, чтобы для каждого имени в списке
+сгенерировать элемент <code>item</code>, вложенный в <code>hello</code>. При этом сохраним поддержку старого API. Файл <code>hello.bemhtml</code>:</p>
+<pre><code class="lang-javascript">block(&#39;hello&#39;)(
+    content()(function() {
+        return (this.ctx.names || [this.ctx.name]).map(function(user) {
+            return { elem: &#39;item&#39;, content: user };
+        });
+    }),
+    elem(&#39;item&#39;)(
+        content()(function() {
+            return [&#39;Hello, &#39;, applyNext(), &#39;!&#39;];
+        })
+    )
+);
+</code></pre>
+<p>Здесь в теле шаблона используется:</p>
+<ul>
+<li>сокращенная запись предикатов с использованием <code>()</code>, эквивалентная двум шаблонам с предикатами: <code>block(&#39;hello&#39;).content()</code>,
+<code>block(&#39;hello&#39;).elem(&#39;item&#39;).content()</code>;</li>
+<li>шаблоны по моде <a href="https://ru.bem.info/technology/bemhtml/current/reference/#content"><code>content</code></a>;
+<code>block(&#39;hello&#39;).elem(&#39;item&#39;).content()</code>;</li>
+<li>конструкция <a href="https://ru.bem.info/technology/bemhtml/current/templating/#applynext"><code>applyNext</code></a> — рекурсивный вызов процедуры применения шаблонов;</li>
+<li>конструкция <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/map"><code>Array.prototype.map</code></a>, определённая в стандарте EcmaScript 5.</li>
+</ul>
+<p><strong>NB</strong> В предикате и теле шаблона можно использовать произвольные JS-выражения.</p>
+<p>В результате применения шаблонов мы получим HTML-страницу с блоком из трех приветствий:</p>
+<pre><code class="lang-html">&lt;div class=&quot;hello&quot;&gt;
+  &lt;div class=&quot;hello__item&quot;&gt;Hello, BEM!&lt;/div&gt;
+  &lt;div class=&quot;hello__item&quot;&gt;Hello, BEMJSON!&lt;/div&gt;
+  &lt;div class=&quot;hello__item&quot;&gt;Hello, BEMHTML!&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p><a name="tags"></a></p>
+<h2 id="-6-html-">Шаг 6. Дополнить шаблон: модифицировать HTML-теги</h2>
+<p>На первый взгляд введение элементов <code>item</code> может показаться излишним, однако его
+полезность можно в полной мере оценить в тот момент, когда потребуется оформить
+блок приветствий в виде маркированного списка.</p>
+<p>В этом случае модификация BEMHTML-шаблона будет очень простой: нам нужно всего
+лишь указать нужные теги для блока <code>hello</code> и элементов <code>item</code> вместо используемого
+по умолчанию <code>&lt;div&gt;</code>. Добавим шаблонам для блока и элемента шаблоны по моде <code>tag</code>:</p>
+<pre><code class="lang-javascript">block(&#39;hello&#39;)(
+    tag()(&#39;ul&#39;),
+    content()(function() {
+        return (this.ctx.names || [this.ctx.name]).map(function(user) {
+            return { elem: &#39;item&#39;, content: user };
+        });
+    }),
+    elem(&#39;item&#39;)(
+        tag()(&#39;li&#39;),
+        content()(function() {
+            return [&#39;Hello, &#39;, applyNext(), &#39;!&#39;];
+        })
+    )
+);
+</code></pre>
+<p>Здесь:</p>
+<ul>
+<li>снова используется вложенная запись предикатов, всего четыре шаблона:<ul>
+<li><code>block(&#39;hello&#39;).tag()</code></li>
+<li><code>block(&#39;hello&#39;).content()</code></li>
+<li><code>block(&#39;hello&#39;).elem(&#39;item&#39;).tag()</code></li>
+<li><code>block(&#39;hello&#39;).elem(&#39;item&#39;).content()</code>;</li>
+</ul>
+</li>
+<li>шаблоны по моде <a href="https://ru.bem.info/technology/bemhtml/current/reference/#tag"><code>tag</code></a>.</li>
+</ul>
+<p>HTML-результат:</p>
+<pre><code class="lang-html">&lt;ul class=&quot;hello&quot;&gt;
+  &lt;li class=&quot;hello__item&quot;&gt;Hello, BEM!&lt;/li&gt;
+  &lt;li class=&quot;hello__item&quot;&gt;Hello, BEMJSON!&lt;/li&gt;
+  &lt;li class=&quot;hello__item&quot;&gt;Hello, BEMHTML!&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h2 id="-7-css-js-a-name-cssjs-a-">Шаг 7. Настроить оформление и поведение блока (CSS и JS) <a name="cssjs"></a></h2>
+<p>При создании блока в проекте <code>project-stub</code> по умолчанию были сгенерированы файлы трех технологий:</p>
+<ul>
+<li><code>hello.bemhtml</code>;</li>
+<li><code>hello.css</code>;</li>
+<li><code>hello.js</code>.</li>
+</ul>
+<p>Реализация блока в технологиях CSS и JS не является частью шаблонизатора
+BEMHTML, однако используется вместе с ним в любом реальном проекте.</p>
+<p><strong>NB</strong> BEMHTML помещает имена БЭМ-сущностей в атрибут <code>class</code> HTML-элементов. В CSS используются только селекторы по классу.</p>
+<p>Например, чтобы покрасить все блоки приветствий в зеленый цвет, достаточно написать в CSS блока (<code>desktop.blocks/hello/hello.css</code>):</p>
+<pre><code class="lang-css">.hello
+{
+    color: green
+}
+</code></pre>
+<p>Чтобы включить клиентский JavaScript для блока, <strong>необходимо</strong> определить для блока шаблон
+по моде <a href="https://ru.bem.info/technology/bemhtml/current/reference/#js"><code>js</code></a>:</p>
+<pre><code class="lang-javascript">block(&#39;hello&#39;).js()(true);
+</code></pre>
+<p>Если для блока был инициализирован клиентский JS, BEMHTML добавляет в список HTML-классов <code>i-bem</code>, а также атрибут со значением параметров клиентского JS (по умолчанию — <code>data-bem</code>, см. <a href="https://ru.bem.info/technology/bemhtml/current/reference/#jsAttr">мода <code>jsAttr</code></a>). JS-фреймворк при инициализации добавляет HTML-класс <code>hello_js_inited</code>:</p>
+<pre><code class="lang-html">&lt;div class=&quot;hello i-bem hello_js_inited&quot; data-bem=&quot;{&amp;quot;hello&amp;quot;:{}}&quot;&gt;
+</code></pre>
+<p><strong>NB</strong> Блок <code>i-bem</code> (часть библиотеки <code>bem-core</code>) — JS-фреймфорк, позволяющий писать клиентский JavaScript в терминах БЭМ.</p>
+<p>Пусть, например, при клике на блоке выводится предупреждение с текстом <code>Hello</code>.
+Файл <code>desktop.blocks/hello/hello.js</code>:</p>
+<pre><code class="lang-javascript">modules.define(&#39;hello&#39;, [&#39;i-bem__dom&#39;], function(provide, BEMDOM) {
+    provide(BEMDOM.decl(this.name, {
+        onSetMod: {
+            &#39;js&#39;: {
+                &#39;inited&#39;: function() {
+                    this.bindTo(&#39;click&#39;, function() { alert(&#39;Hello&#39;); });
+                }
+            }
+        }
+    }));
+});
+</code></pre>
+<h3 id="-">Подробнее</h3>
+<ul>
+<li><a href="https://ru.bem.info/technology/i-bem/">Описание JS-фреймворка <code>i-bem.js</code></a></li>
+</ul>
+<h2 id="-">Дальнейшее чтение</h2>
+<ul>
+<li><a href="https://ru.bem.info/technology/bemhtml/v2/reference/">BEMHTML. Справочное руководство</a></li>
+<li><a href="https://ru.bem.info/libs/bem-core/">Библиотека блоков bem-core</a></li>
+<li><a href="https://ru.bem.info/method/">БЭМ-методология</a></li>
+</ul>
+</div></div></div></div><div class="footer"></div><script src="/_index.js"></script></body></html>
